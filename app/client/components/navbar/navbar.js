@@ -186,6 +186,9 @@ function setHeader() {
     case "/app/":
       header.innerHTML = "<h1>Inicio</h1>";
       break;
+    case "/app/index.html":
+      header.innerHTML = "<h1>Inicio</h1>";
+      break;
     default:
       header.innerHTML = "<h1>404 Not Found</h1>";
       break;
