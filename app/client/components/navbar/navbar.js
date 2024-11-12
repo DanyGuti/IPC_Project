@@ -1,3 +1,5 @@
+import { loadTFGSComponents } from "../../scripts/main.js";
+
 export function toggleBurger() {
   var sidenav = document.getElementById("sidenav-1");
   var sidenavToggler = document.getElementById("sidenav-toggler");
@@ -69,7 +71,17 @@ export function setNavbarActives() {
     return dropdownLinks;
   };
   const setInitialStateActive = (activeLinkId) => {
-    const navLinksA = ["nav-a-home", "nav-a-about", "nav-a-cal"];
+    const navLinksA = [
+      "nav-a-home",
+      "nav-a-about",
+      "nav-a-cal",
+      "nav-a-req-phone",
+      "nav-a-home-phone",
+      "nav-a-cal-phone",
+      "nav-a-about-phone",
+      "nav-a-tfgs-phone",
+      "nav-a-eval-phone",
+    ];
     navLinksA.forEach((link) => {
       const anchor = document.getElementById(link);
       if (anchor) {
@@ -95,14 +107,27 @@ export function setNavbarActives() {
   if (startingActive) {
     startingActive.querySelector("a").style.textDecoration = "underline";
   }
-  const pageToActiveLink = {
+  const pageToActiveLinkDesktop = {
     "/app/about_us.html": "nav-a-about",
     "/app/calendarios.html": "nav-a-cal",
     "/app/home.html": "nav-a-home",
   };
+  const pageToActiveLinkPhone = {
+    "/app/about_us.html": "nav-a-about-phone",
+    "/app/calendarios.html": "nav-a-cal-phone",
+    "/app/home.html": "nav-a-home-phone",
+    "/app/tfgs_anteriores.html": "nav-a-tfgs-phone",
+    "/app/autoevaluacion.html": "nav-a-autoeval-phone",
+    "/app/requisitos_norm.html": "nav-a-req-phone",
+  };
   const currentPath = window.location.pathname;
-  if (pageToActiveLink[currentPath]) {
-    setInitialStateActive(pageToActiveLink[currentPath]);
+  let selectedLinkDesktop = pageToActiveLinkDesktop[currentPath];
+  let selectedLinkPhone = pageToActiveLinkPhone[currentPath];
+  if (pageToActiveLinkDesktop[currentPath]) {
+    setInitialStateActive(pageToActiveLinkDesktop[currentPath]);
+  }
+  if (pageToActiveLinkPhone[currentPath]) {
+    setInitialStateActive(pageToActiveLinkPhone[currentPath]);
   }
 
   if (navLinks.length === 0) {
@@ -145,6 +170,16 @@ export function setNavbarActives() {
     link.addEventListener("click", (event) => {
       event.preventDefault();
       const currentActive = document.querySelector(".nav-item.active");
+      const underlinedPhone =
+        document.getElementById(selectedLinkPhone) || null;
+      const underlinedDesktop =
+        document.getElementById(selectedLinkDesktop) || null;
+      if (underlinedPhone) {
+        underlinedPhone.style.textDecoration = "none";
+      }
+      if (underlinedDesktop) {
+        underlinedDesktop.style.textDecoration = "none";
+      }
       if (currentActive && !hasClickedDropdown) {
         currentActive.classList.remove("active");
         currentActive.querySelector("a").style.textDecoration = "none";
@@ -173,13 +208,41 @@ export function setNavbarActives() {
 }
 
 function loadPageContent(href) {
-  document.getElementById("content-container").innerHTML = "";
-  fetch(href)
-    .then((response) => response.text())
-    .then((html) => {
-      document.getElementById("content-container").innerHTML = html;
-      setHeader();
-    });
+  return new Promise((resolve, reject) => {
+    const contentContainer = document.getElementById("content-container");
+    fetch(href)
+      .then((response) => response.text())
+      .then((html) => {
+        const tempDiv = document.createElement("div");
+        tempDiv.innerHTML = html;
+
+        const scripts = tempDiv.querySelectorAll("script");
+        scripts.forEach((script) => script.remove());
+
+        const filterContent = tempDiv.querySelector("#content-container");
+        if (filterContent) {
+          filterContent.remove();
+        }
+        const filterNavbar = tempDiv.querySelector("#navbar-container");
+        if (filterNavbar) {
+          filterNavbar.remove();
+        }
+        const filterHeader = tempDiv.querySelector("#header-container");
+        if (filterHeader) {
+          filterHeader.remove();
+        }
+        contentContainer.innerHTML = tempDiv.innerHTML;
+        const getCurrentPage = window.location.pathname;
+        if (getCurrentPage === "/app/tfgs_anteriores.html") {
+          loadTFGSComponents();
+        }
+        setHeader();
+        resolve(contentContainer);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
 }
 
 function setHeader() {
