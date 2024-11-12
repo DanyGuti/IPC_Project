@@ -54,3 +54,7 @@ export function setNavbarMenu() {
 window.addEventListener("load", function () {
   setNavbarActives();
 });
+
+window.addEventListener("resize", function () {
+  setNavbarMenu();
+});
