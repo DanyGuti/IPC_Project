@@ -84,6 +84,12 @@ export function setNavbarActives() {
     });
   };
 
+  const setInactiveState = (navLinks) => {
+    navLinks.forEach((link) => {
+      link.classList.remove("active");
+    });
+  };
+
   const navLinks = document.querySelectorAll(".nav-item");
   const startingActive = document.querySelector(".nav-item.active");
   if (startingActive) {
@@ -107,6 +113,7 @@ export function setNavbarActives() {
   let hasClickedDropdown = false;
   const anchorActive = document.getElementById("auto-eval-a-nav");
   const anchorActive2 = document.getElementById("tfgs-a-nav");
+  const anchorActive3 = document.getElementById("requisitos-a-nav");
 
   dropdownLinks.forEach((link) => {
     link.addEventListener("click", (event) => {
@@ -117,6 +124,9 @@ export function setNavbarActives() {
       }
       if (anchorActive2.classList.contains("active")) {
         anchorActive2.classList.remove("active");
+      }
+      if (anchorActive3.classList.contains("active")) {
+        anchorActive3.classList.remove("active");
       }
       if (currentActive && !hasClickedDropdown) {
         currentActive.classList.remove("active");
@@ -142,7 +152,6 @@ export function setNavbarActives() {
       if (link.classList.contains("dropdown-item")) {
         return;
       }
-      console.log(link);
       link.classList.add("active");
       link.querySelector("a").style.textDecoration = "underline";
       const href = link.querySelector("a").getAttribute("href");
@@ -151,8 +160,11 @@ export function setNavbarActives() {
         hasClickedDropdown = false;
         anchorActive.classList.remove("active");
         anchorActive2.classList.remove("active");
+        anchorActive3.classList.remove("active");
         if (!hasClickedDropdown) {
           setInitialStateActive(link.querySelector("a").id);
+        } else {
+          setInactiveState(dropdownLinks);
         }
       }
       loadPageContent(href);
@@ -195,6 +207,9 @@ function setHeader() {
       break;
     case "/app/index.html":
       header.innerHTML = "<h1>Inicio</h1>";
+      break;
+    case "/app/requisitos_norm.html":
+      header.innerHTML = "<h1>Requisitos y normativas</h1>";
       break;
     default:
       header.innerHTML = "<h1>404 Not Found</h1>";
