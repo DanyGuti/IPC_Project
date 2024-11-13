@@ -18,6 +18,12 @@ import {
   loadOutCardsAboutUs,
 } from "../../client/components/cards.js";
 
+import {
+  constructFormLayoutPhone,
+  formValidation,
+  observeChangesForm,
+} from "../scripts/form.js";
+
 export function loadComponent(componentName, containerId) {
   return new Promise((resolve, reject) => {
     fetch(`./client/components/${componentName}.html`)
@@ -119,6 +125,27 @@ export const loadTFGSComponents = async () => {
 
 export const loadAboutUsComponents = async () => {
   await loadOutCardsAboutUs(cardPropsAboutUs);
+  setTimeout(async () => {
+    const navBar = document.getElementById("navbar-container");
+    const backGroundImage = document.createElement("img");
+    if (navBar.querySelector("#backGroundImage-navbar")) {
+      return;
+    }
+    backGroundImage.id = "backGroundImage-navbar";
+    backGroundImage.src =
+      "https://images.unsplash.com/photo-1488998427799-e3362cec87c3?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNvbXB1dGVyJTIwYm9va3xlbnwwfHwwfHx8MA%3D%3D";
+    backGroundImage.style.width = "100%";
+    backGroundImage.style.height = "100%";
+    backGroundImage.style.zIndex = "-10";
+    navBar.appendChild(backGroundImage);
+  }, 150);
+};
+
+export const loadForm = async () => {
+  await loadComponent("form", "content-container");
+  constructFormLayoutPhone();
+  formValidation();
+  observeChangesForm();
   setTimeout(async () => {
     const navBar = document.getElementById("navbar-container");
     const backGroundImage = document.createElement("img");

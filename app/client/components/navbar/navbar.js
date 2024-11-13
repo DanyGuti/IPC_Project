@@ -1,6 +1,7 @@
 import {
   loadTFGSComponents,
   loadAboutUsComponents,
+  loadForm,
 } from "../../scripts/main.js";
 
 export function toggleBurger() {
@@ -240,6 +241,8 @@ function loadPageContent(href) {
           loadTFGSComponents();
         } else if (getCurrentPage === "/app/about_us.html") {
           loadAboutUsComponents();
+        } else if (getCurrentPage === "/app/autoevaluacion.html") {
+          loadForm();
         }
         setHeader();
         resolve(contentContainer);
@@ -268,7 +271,7 @@ function setHeader() {
       header.innerHTML = "<h1>TFG's anteriores</h1>";
       break;
     case "/app/autoevaluacion.html":
-      header.innerHTML = "<h1>Autoevalúate</h1>";
+      header.innerHTML = "<h1>Cuestionario</h1>";
       break;
     case "/app/":
       header.innerHTML = "<h1>Inicio</h1>";

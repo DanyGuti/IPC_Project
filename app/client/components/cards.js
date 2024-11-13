@@ -36,6 +36,7 @@ export async function loadOutCardLayoutTfgs(
     divider.style.width = "100%";
     paragraph.textContent = rowLayoutTitle;
     paragraph.style.fontSize = "1.5rem";
+    paragraph.style.fontWeight = "medium";
 
     const wrapper = document.createElement("div");
     wrapper.style.display = "flex";
@@ -74,7 +75,7 @@ export async function loadOutCardLayoutTfgs(
     thirdCardRowContainer.style.flexDirection = "row";
     thirdCardRowContainer.alignItems = "center";
     thirdCardRowContainer.style.width = "100%";
-    thirdCardRowContainer.style.height = "40%";
+    thirdCardRowContainer.style.height = "35%";
     thirdCardRowContainer.style.justifyContent = "center";
     wrapper.appendChild(thirdCardRowContainer);
 
