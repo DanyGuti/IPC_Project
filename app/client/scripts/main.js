@@ -10,9 +10,13 @@ import {
   cardPropsComputacion,
   cardPropsIngSoftware,
   cardPropsComputadores,
+  cardPropsAboutUs,
 } from "../../utils/constants.js";
 
-import { loadOutCardLayoutTfgs } from "../../client/components/cards.js";
+import {
+  loadOutCardLayoutTfgs,
+  loadOutCardsAboutUs,
+} from "../../client/components/cards.js";
 
 export function loadComponent(componentName, containerId) {
   return new Promise((resolve, reject) => {
@@ -103,6 +107,24 @@ export const loadTFGSComponents = async () => {
       return;
     }
     const backGroundImage = document.createElement("img");
+    backGroundImage.id = "backGroundImage-navbar";
+    backGroundImage.src =
+      "https://images.unsplash.com/photo-1488998427799-e3362cec87c3?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNvbXB1dGVyJTIwYm9va3xlbnwwfHwwfHx8MA%3D%3D";
+    backGroundImage.style.width = "100%";
+    backGroundImage.style.height = "100%";
+    backGroundImage.style.zIndex = "-10";
+    navBar.appendChild(backGroundImage);
+  }, 150);
+};
+
+export const loadAboutUsComponents = async () => {
+  await loadOutCardsAboutUs(cardPropsAboutUs);
+  setTimeout(async () => {
+    const navBar = document.getElementById("navbar-container");
+    const backGroundImage = document.createElement("img");
+    if (navBar.querySelector("#backGroundImage-navbar")) {
+      return;
+    }
     backGroundImage.id = "backGroundImage-navbar";
     backGroundImage.src =
       "https://images.unsplash.com/photo-1488998427799-e3362cec87c3?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNvbXB1dGVyJTIwYm9va3xlbnwwfHwwfHx8MA%3D%3D";

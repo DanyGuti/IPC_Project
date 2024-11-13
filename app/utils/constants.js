@@ -78,3 +78,22 @@ export const cardPropsComputadores = [
       "https://addi.ehu.es/bitstream/handle/10810/58089/GrAL_Alex_de_Miguel.pdf?sequence=2&isAllowed=y",
   },
 ];
+
+export const cardPropsAboutUs = [
+  {
+    name: "Daniel Gutiérrez Gómez",
+    imageSrc: "./icons/no-image.svg",
+  },
+  {
+    name: "Pablo Alcolea",
+    imageSrc: "./icons/no-image.svg",
+  },
+  {
+    name: "Gorka Egüés",
+    imageSrc: "./icons/no-image.svg",
+  },
+  {
+    name: "David Murguialday",
+    imageSrc: "./icons/no-image.svg",
+  },
+];

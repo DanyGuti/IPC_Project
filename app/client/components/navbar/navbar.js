@@ -1,4 +1,7 @@
-import { loadTFGSComponents } from "../../scripts/main.js";
+import {
+  loadTFGSComponents,
+  loadAboutUsComponents,
+} from "../../scripts/main.js";
 
 export function toggleBurger() {
   var sidenav = document.getElementById("sidenav-1");
@@ -235,6 +238,8 @@ function loadPageContent(href) {
         const getCurrentPage = window.location.pathname;
         if (getCurrentPage === "/app/tfgs_anteriores.html") {
           loadTFGSComponents();
+        } else if (getCurrentPage === "/app/about_us.html") {
+          loadAboutUsComponents();
         }
         setHeader();
         resolve(contentContainer);

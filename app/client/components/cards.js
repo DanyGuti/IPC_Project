@@ -93,3 +93,94 @@ export async function loadOutCardLayoutTfgs(
     thirdCardRowContainer.appendChild(card);
   }, 100);
 }
+
+export async function loadOutCardsAboutUs(cardProps) {
+  setTimeout(async () => {
+    const mainContent = document.getElementById("content-container");
+    const headerContainer = document.getElementById("header-container");
+    headerContainer.zIndex = "100";
+    headerContainer.style.position = "absolute";
+    mainContent.style.position = "relative";
+    mainContent.style.flexDirection = "column";
+    let idRowLayout = 0;
+    // Create the Objetivos paragraph
+    const objectiveDivider = document.createElement("div");
+
+    // Create the ¿Quiénes somos? title
+    const objectiveParagraph = document.createElement("h4");
+    objectiveParagraph.textContent = "Objetivos";
+    objectiveDivider.style.marginTop = "5%";
+    const descriptionObjective = document.createElement("p");
+    const descriptionObjective2 = document.createElement("p");
+    descriptionObjective.textContent =
+      "Mostrar de una manera eficiente, transparente y de fácil acceso a los estudiantes/profesores del tercer grado el proceso de realización del Trabajo de Fin de Grado.";
+    // overflow wrap
+    descriptionObjective.style.overflowWrap = "break-word";
+    descriptionObjective2.style.overflowWrap = "break-word";
+    descriptionObjective2.textContent =
+      "Facilitar al estudiantado y a los profesores el calendario con las fechas establecidas por la UPV/EHU.";
+
+    // Insert the description of the objective
+    objectiveDivider.appendChild(objectiveParagraph);
+    objectiveDivider.appendChild(descriptionObjective);
+    objectiveDivider.appendChild(descriptionObjective2);
+    mainContent.appendChild(objectiveDivider);
+
+    const divider = document.createElement("div");
+    const paragraph = document.createElement("h2");
+    divider.style.display = "flex";
+    divider.style.flexDirection = "row";
+    divider.style.width = "100%";
+    paragraph.textContent = "¿Quiénes somos?";
+    paragraph.style.fontSize = "1.5rem";
+
+    divider.appendChild(paragraph);
+    mainContent.appendChild(divider);
+
+    const rowContainer = document.createElement("div");
+    rowContainer.id = `row-cards-about-${idRowLayout}`;
+    rowContainer.style.display = "flex";
+    rowContainer.style.flexDirection = "row";
+    rowContainer.style.justifyContent = "flex-start";
+    rowContainer.style.gap = "5%";
+    rowContainer.style.marginTop = "5%";
+    rowContainer.style.marginBottom = "5%";
+    rowContainer.style.width = "100%";
+    rowContainer.style.height = "32%";
+
+    mainContent.appendChild(rowContainer);
+
+    for (let i = 0; i < 2; i++) {
+      await loadComponent("about_us_card", `row-cards-about-${idRowLayout}`);
+      const card = document.getElementById("card-about-phone");
+      card.id = `card-about-phone-${i}`;
+      const cardData = cardProps[i];
+      const cardImage = card.querySelector("#card-img");
+      const cardBody = card.querySelector("#props-card-body");
+      cardImage.src = cardData.imageSrc;
+      cardBody.querySelector(".card-text").textContent = cardData.name;
+    }
+    idRowLayout++;
+    const rowContainer2 = document.createElement("div");
+    rowContainer2.id = `row-cards-about-${idRowLayout}`;
+    rowContainer2.style.display = "flex";
+    rowContainer2.style.flexDirection = "row";
+    rowContainer2.style.justifyContent = "flex-start";
+    rowContainer2.style.gap = "5%";
+    rowContainer2.style.marginTop = "5%";
+    rowContainer2.style.marginBottom = "10%";
+    rowContainer2.style.width = "100%";
+    rowContainer2.style.height = "32%";
+    mainContent.appendChild(rowContainer2);
+    for (let i = 2; i < cardProps.length; i++) {
+      await loadComponent("about_us_card", `row-cards-about-${idRowLayout}`);
+      const card = document.getElementById("card-about-phone");
+      card.id = `card-about-phone-${i}`;
+      const cardData = cardProps[i];
+      const cardImage = card.querySelector("#card-img");
+      const cardBody = card.querySelector("#props-card-body");
+      cardImage.src = cardData.imageSrc;
+      cardBody.querySelector(".card-text").textContent = cardData.name;
+    }
+  }, 100);
+}
