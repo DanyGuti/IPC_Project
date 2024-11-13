@@ -97,3 +97,19 @@ export const cardPropsAboutUs = [
     imageSrc: "./icons/no-image.svg",
   },
 ];
+
+export const cardPropsBibliographies = [
+  {
+    "Trabajo de Fin de Grado de Grado de Informática":
+      "https://www.ehu.eus/documents/d/informatika-fakultatea/normativa_iig_es",
+  },
+  ,
+  {
+    "Trabajo de Fin de Grado de Grado de Inteligencia artifical":
+      "https://www.ehu.eus/documents/d/informatika-fakultatea/normativa_aag_es",
+  },
+  {
+    "Trabajo de Fin de Grado de Grado de Computadores":
+      "https://www.ehu.eus/documents/340468/2334257/Normativa_UPVEHU_cas",
+  },
+];

@@ -1,4 +1,5 @@
 import { loadComponent } from "../scripts/main.js";
+import { cardPropsBibliographies } from "../../utils/constants.js";
 /**
  * Load the card component with the given id into the container with the given id
  * @param {int} idRowLayout - The id of the component to load
@@ -119,12 +120,42 @@ export async function loadOutCardsAboutUs(cardProps) {
     descriptionObjective2.style.overflowWrap = "break-word";
     descriptionObjective2.textContent =
       "Facilitar al estudiantado y a los profesores el calendario con las fechas establecidas por la UPV/EHU.";
-
     // Insert the description of the objective
     objectiveDivider.appendChild(objectiveParagraph);
     objectiveDivider.appendChild(descriptionObjective);
     objectiveDivider.appendChild(descriptionObjective2);
     mainContent.appendChild(objectiveDivider);
+
+    // Inject the bibliographies
+    const bibliographies = document.createElement("div");
+    bibliographies.style.display = "flex";
+    bibliographies.style.flexDirection = "column";
+    bibliographies.style.width = "85%";
+    bibliographies.style.marginTop = "5%";
+    bibliographies.style.justifyContent = "start";
+    bibliographies.style.alignItems = "start";
+
+    const bibliographiesTitle = document.createElement("h2");
+    bibliographiesTitle.textContent = "Fuentes";
+    const ulist = document.createElement("ul");
+    ulist.style.display = "flex";
+    ulist.style.flexDirection = "column";
+    ulist.style.width = "100%";
+    ulist.style.justifyContent = "center";
+    ulist.style.alignItems = "center";
+    // TODO CHANGE THE URLS!!!!
+    // TO THE ONES THAT ARE REAL ONES
+    cardPropsBibliographies.forEach((element) => {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = Object.values(element)[0];
+      a.textContent = Object.keys(element)[0];
+      li.appendChild(a);
+      ulist.appendChild(li);
+    });
+    bibliographies.appendChild(bibliographiesTitle);
+    bibliographies.appendChild(ulist);
+    mainContent.appendChild(bibliographies);
 
     const divider = document.createElement("div");
     const paragraph = document.createElement("h2");
