@@ -96,6 +96,10 @@ export async function loadOutCardLayoutTfgs(
   }, 100);
 }
 
+/**
+ * Load the cards in about us view
+ * @param {[Object]} cardProps
+ */
 export async function loadOutCardsAboutUs(cardProps) {
   setTimeout(async () => {
     const mainContent = document.getElementById("content-container");

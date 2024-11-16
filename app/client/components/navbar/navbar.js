@@ -4,6 +4,24 @@ import {
   loadForm,
 } from "../../scripts/main.js";
 
+const pageToActiveLinkDesktop = {
+  "/app/about_us.html": "nav-a-about",
+  "/app/calendarios.html": "nav-a-cal",
+  "/app/home.html": "nav-a-home",
+};
+
+const pageToActiveLinkPhone = {
+  "/app/about_us.html": "nav-a-about-phone",
+  "/app/calendarios.html": "nav-a-cal-phone",
+  "/app/home.html": "nav-a-home-phone",
+  "/app/tfgs_anteriores.html": "nav-a-tfgs-phone",
+  "/app/autoevaluacion.html": "nav-a-autoeval-phone",
+  "/app/requisitos_norm.html": "nav-a-req-phone",
+};
+
+/**
+ * Toggle the state of the burger menu
+ */
 export function toggleBurger() {
   var sidenav = document.getElementById("sidenav-1");
   var sidenavToggler = document.getElementById("sidenav-toggler");
@@ -19,10 +37,16 @@ export function toggleBurger() {
   }
 }
 
+/**
+ * Get the current windoe size
+ */
 function getWidthWindow() {
   return window.innerWidth;
 }
 
+/**
+ * Close the burger navigation menu
+ */
 export function closeBurger() {
   var sidenav = document.getElementById("sidenav-1");
   var sidenavToggler = document.getElementById("sidenav-toggler");
@@ -33,6 +57,10 @@ export function closeBurger() {
   sidenavCloser.style.display = "none";
 }
 
+/**
+ * Toggle the menu navbar dropdown state
+ * @param {Event}
+ */
 export function toggleDropdown(event) {
   event.preventDefault();
   const dropdownMenu = event.target.nextElementSibling;
@@ -50,6 +78,9 @@ export function toggleDropdown(event) {
   }
 }
 
+/**
+ * Close the dropdown menu navbar in desktop
+ */
 export function closeDropdownNavBar() {
   document.addEventListener("click", (event) => {
     const dropdowns = document.querySelectorAll(".dropdown-menu");
@@ -64,7 +95,26 @@ export function closeDropdownNavBar() {
   });
 }
 
+/**
+ * Set the active state of the navbar
+ * based on the current window location
+ */
 export function setNavbarActives() {
+  /**
+   * Set the inactive state of the navbar
+   * @param {NodeListOf<Element>} navLinks - The navigation links
+   * @returns {void}
+   */
+  const setInactiveState = (navLinks) => {
+    navLinks.forEach((link) => {
+      link.classList.remove("active");
+    });
+  };
+  /**
+   * Get the dropdown links
+   * @param {NodeListOf<Element>} navLinks - The navigation links
+   * @returns {[Element]} The dropdown links
+   */
   const getDropdownLinks = (navLinks) => {
     let dropdownLinks = [];
     navLinks.forEach((link) => {
@@ -74,56 +124,12 @@ export function setNavbarActives() {
     });
     return dropdownLinks;
   };
-  const setInitialStateActive = (activeLinkId) => {
-    const navLinksA = [
-      "nav-a-home",
-      "nav-a-about",
-      "nav-a-cal",
-      "nav-a-req-phone",
-      "nav-a-home-phone",
-      "nav-a-cal-phone",
-      "nav-a-about-phone",
-      "nav-a-tfgs-phone",
-      "nav-a-eval-phone",
-    ];
-    navLinksA.forEach((link) => {
-      const anchor = document.getElementById(link);
-      if (anchor) {
-        if (link === activeLinkId) {
-          anchor.classList.add("active");
-          anchor.style.textDecoration = "underline";
-        } else {
-          anchor.classList.remove("active");
-          anchor.style.textDecoration = "none";
-        }
-      }
-    });
-  };
-
-  const setInactiveState = (navLinks) => {
-    navLinks.forEach((link) => {
-      link.classList.remove("active");
-    });
-  };
 
   const navLinks = document.querySelectorAll(".nav-item");
   const startingActive = document.querySelector(".nav-item.active");
   if (startingActive) {
     startingActive.querySelector("a").style.textDecoration = "underline";
   }
-  const pageToActiveLinkDesktop = {
-    "/app/about_us.html": "nav-a-about",
-    "/app/calendarios.html": "nav-a-cal",
-    "/app/home.html": "nav-a-home",
-  };
-  const pageToActiveLinkPhone = {
-    "/app/about_us.html": "nav-a-about-phone",
-    "/app/calendarios.html": "nav-a-cal-phone",
-    "/app/home.html": "nav-a-home-phone",
-    "/app/tfgs_anteriores.html": "nav-a-tfgs-phone",
-    "/app/autoevaluacion.html": "nav-a-autoeval-phone",
-    "/app/requisitos_norm.html": "nav-a-req-phone",
-  };
   const currentPath = window.location.pathname;
   let selectedLinkDesktop = pageToActiveLinkDesktop[currentPath];
   let selectedLinkPhone = pageToActiveLinkPhone[currentPath];
@@ -140,23 +146,22 @@ export function setNavbarActives() {
 
   let dropdownLinks = getDropdownLinks(navLinks);
   let hasClickedDropdown = false;
-  const anchorActive = document.getElementById("auto-eval-a-nav");
-  const anchorActive2 = document.getElementById("tfgs-a-nav");
-  const anchorActive3 = document.getElementById("requisitos-a-nav");
+  const anchorActives = [
+    document.getElementById("auto-eval-a-nav"),
+    document.getElementById("tfgs-a-nav"),
+    document.getElementById("requisitos-a-nav"),
+  ];
 
   dropdownLinks.forEach((link) => {
     link.addEventListener("click", (event) => {
       event.preventDefault();
       const currentActive = document.querySelector(".nav-item.active");
-      if (anchorActive.classList.contains("active")) {
-        anchorActive.classList.remove("active");
-      }
-      if (anchorActive2.classList.contains("active")) {
-        anchorActive2.classList.remove("active");
-      }
-      if (anchorActive3.classList.contains("active")) {
-        anchorActive3.classList.remove("active");
-      }
+
+      anchorActives.forEach((anchor) => {
+        if (anchor.classList.contains("active")) {
+          anchor.classList.remove("active");
+        }
+      });
       if (currentActive && !hasClickedDropdown) {
         currentActive.classList.remove("active");
         currentActive.querySelector("a").style.textDecoration = "none";
@@ -165,11 +170,9 @@ export function setNavbarActives() {
       const href = link.getAttribute("href");
       window.history.pushState({ path: href }, "", href);
       hasClickedDropdown = true;
-
       loadPageContent(href);
     });
   });
-
   navLinks.forEach((link) => {
     link.addEventListener("click", (event) => {
       event.preventDefault();
@@ -197,9 +200,11 @@ export function setNavbarActives() {
       window.history.pushState({ path: href }, "", href);
       if (getWidthWindow() > 768) {
         hasClickedDropdown = false;
-        anchorActive.classList.remove("active");
-        anchorActive2.classList.remove("active");
-        anchorActive3.classList.remove("active");
+        anchorActives.forEach((anchor) => {
+          if (anchor.classList.contains("active")) {
+            anchor.classList.remove("active");
+          }
+        });
         if (!hasClickedDropdown) {
           setInitialStateActive(link.querySelector("a").id);
         } else {
@@ -211,6 +216,40 @@ export function setNavbarActives() {
   });
 }
 
+/**
+ * Set the initial state of the links
+ * @param {string} - The active link id
+ */
+const setInitialStateActive = (activeLinkId) => {
+  const navLinksA = [
+    "nav-a-home",
+    "nav-a-about",
+    "nav-a-cal",
+    "nav-a-req-phone",
+    "nav-a-home-phone",
+    "nav-a-cal-phone",
+    "nav-a-about-phone",
+    "nav-a-tfgs-phone",
+    "nav-a-eval-phone",
+  ];
+  navLinksA.forEach((link) => {
+    const anchor = document.getElementById(link);
+    if (anchor) {
+      if (link === activeLinkId) {
+        anchor.classList.add("active");
+        anchor.style.textDecoration = "underline";
+      } else {
+        anchor.classList.remove("active");
+        anchor.style.textDecoration = "none";
+      }
+    }
+  });
+};
+
+/**
+ * Load the page content based on the navigation
+ * @param {string} - The selected window based on navigation
+ */
 function loadPageContent(href) {
   return new Promise((resolve, reject) => {
     const contentContainer = document.getElementById("content-container");
@@ -222,19 +261,8 @@ function loadPageContent(href) {
 
         const scripts = tempDiv.querySelectorAll("script");
         scripts.forEach((script) => script.remove());
+        resetStateOnLoadPage(tempDiv);
 
-        const filterContent = tempDiv.querySelector("#content-container");
-        if (filterContent) {
-          filterContent.remove();
-        }
-        const filterNavbar = tempDiv.querySelector("#navbar-container");
-        if (filterNavbar) {
-          filterNavbar.remove();
-        }
-        const filterHeader = tempDiv.querySelector("#header-container");
-        if (filterHeader) {
-          filterHeader.remove();
-        }
         contentContainer.innerHTML = tempDiv.innerHTML;
         const getCurrentPage = window.location.pathname;
         if (getCurrentPage === "/app/tfgs_anteriores.html") {
@@ -253,6 +281,29 @@ function loadPageContent(href) {
   });
 }
 
+/**
+ * Reset the state of the current loaded page
+ * @param {HTMLDivElement} tempDiv
+ */
+const resetStateOnLoadPage = (tempDiv) => {
+  const filterContent = tempDiv.querySelector("#content-container");
+  if (filterContent) {
+    filterContent.remove();
+  }
+  const filterNavbar = tempDiv.querySelector("#navbar-container");
+  if (filterNavbar) {
+    filterNavbar.remove();
+  }
+  const filterHeader = tempDiv.querySelector("#header-container");
+  if (filterHeader) {
+    filterHeader.remove();
+  }
+};
+
+/**
+ * Set the header of the pages
+ * based on the current window url
+ */
 function setHeader() {
   const getCurrentPage = window.location.pathname;
   const header = document.getElementById("header-container");

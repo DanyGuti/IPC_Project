@@ -1,6 +1,9 @@
 import { questionsAutoEval } from "../../utils/questions.js";
 import { loadComponent } from "./main.js";
 
+/**
+ * Bootstrap form validation
+ */
 export const formValidation = () => {
   (function () {
     "use strict";
@@ -27,46 +30,8 @@ export const formValidation = () => {
               validResponses++;
             }
           });
-          // Load the results from the modal
           await loadComponent("modal_auto_eval", "content-container");
-          const modal = document.getElementById("exampleModal");
-          const modalContent = document.getElementById("modal-body-content");
-          const modalTitle = document.getElementById("exampleModalLabel");
-          modalTitle.textContent = "Resultados";
-          modalContent.innerHTML = `<p>Respuestas correctas: ${validResponses}</p>`;
-          // show the modal
-          const bootstrapModal = new bootstrap.Modal(modal);
-          bootstrapModal.show();
-          // Close the modal
-          const closeButton = document.getElementById("close-modal-form");
-          closeButton.addEventListener("click", async () => {
-            bootstrapModal.hide();
-            // Reset the form
-            validResponses = 0;
-            await resetStateForm(form);
-            const documentButton =
-              document.getElementById("submit-form-button");
-            documentButton.disabled = true;
-          });
-          modal.addEventListener("hidden.bs.modal", async () => {
-            // Reset the form
-            validResponses = 0;
-            await resetStateForm(form);
-            const documentButton =
-              document.getElementById("submit-form-button");
-            documentButton.disabled = true;
-          });
-          const goHomeButton = document.getElementById("home-modal-form");
-          goHomeButton.addEventListener("click", async () => {
-            bootstrapModal.hide();
-            // Reset the form
-            validResponses = 0;
-            await resetStateForm(form);
-            const documentButton =
-              document.getElementById("submit-form-button");
-            documentButton.disabled = true;
-            window.location.href = "/app/home.html";
-          });
+          await postFormSubmit(validResponses, form);
         },
         false
       );
@@ -74,6 +39,52 @@ export const formValidation = () => {
   })();
 };
 
+/** Post submit form
+ * @param {int} validResponses - Number of valid responses
+ * @param {HTMLElement} form - Form element
+ */
+const postFormSubmit = async (validResponses, form) => {
+  // Load the results from the modal
+  const modal = document.getElementById("exampleModal");
+  const modalContent = document.getElementById("modal-body-content");
+  const modalTitle = document.getElementById("exampleModalLabel");
+  modalTitle.textContent = "Resultados";
+  modalContent.innerHTML = `<p>Respuestas correctas: ${validResponses}</p>`;
+  // show the modal
+  const bootstrapModal = new bootstrap.Modal(modal);
+  bootstrapModal.show();
+  // Close the modal
+  const closeButton = document.getElementById("close-modal-form");
+  closeButton.addEventListener("click", async () => {
+    bootstrapModal.hide();
+    // Reset the form
+    validResponses = 0;
+    await resetStateForm(form);
+    const documentButton = document.getElementById("submit-form-button");
+    documentButton.disabled = true;
+  });
+  modal.addEventListener("hidden.bs.modal", async () => {
+    // Reset the form
+    validResponses = 0;
+    await resetStateForm(form);
+    const documentButton = document.getElementById("submit-form-button");
+    documentButton.disabled = true;
+  });
+  const goHomeButton = document.getElementById("home-modal-form");
+  goHomeButton.addEventListener("click", async () => {
+    bootstrapModal.hide();
+    // Reset the form
+    validResponses = 0;
+    await resetStateForm(form);
+    const documentButton = document.getElementById("submit-form-button");
+    documentButton.disabled = true;
+    window.location.href = "/app/home.html";
+  });
+};
+
+/**
+ * Construct the layout of form for phone
+ */
 export const constructFormLayoutPhone = () => {
   const containerInnerDiv = document.getElementById("question-container-form");
   questionsAutoEval.forEach((question, index) => {
@@ -140,6 +151,10 @@ const resetStateForm = async (form) => {
   await observeChangesForm();
 };
 
+/**
+ * Observe the changes for the form based on
+ * the input from the user
+ */
 export const observeChangesForm = async () => {
   const forms = document.querySelectorAll(".form-check-input");
   let totalQuestionsChecked = 0;
