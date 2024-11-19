@@ -4,21 +4,6 @@ import {
   loadForm,
 } from "../../scripts/main.js";
 
-const pageToActiveLinkDesktop = {
-  "/app/about_us.html": "nav-a-about",
-  "/app/calendarios.html": "nav-a-cal",
-  "/app/home.html": "nav-a-home",
-};
-
-const pageToActiveLinkPhone = {
-  "/app/about_us.html": "nav-a-about-phone",
-  "/app/calendarios.html": "nav-a-cal-phone",
-  "/app/home.html": "nav-a-home-phone",
-  "/app/tfgs_anteriores.html": "nav-a-tfgs-phone",
-  "/app/autoevaluacion.html": "nav-a-autoeval-phone",
-  "/app/requisitos_norm.html": "nav-a-req-phone",
-};
-
 /**
  * Toggle the state of the burger menu
  */
@@ -99,7 +84,55 @@ export function closeDropdownNavBar() {
  * Set the active state of the navbar
  * based on the current window location
  */
-export function setNavbarActives() {
+export async function setNavbarActives() {
+  /**
+   * Set the initial state of the links
+   * @param {string} - The active link id
+   */
+  const setInitialStateActive = (activeLinkId) => {
+    const navLinksA = [
+      "nav-a-home",
+      "nav-a-about",
+      "nav-a-cal",
+      "nav-a-req-phone",
+      "nav-a-home-phone",
+      "nav-a-cal-phone",
+      "nav-a-about-phone",
+      "nav-a-tfgs-phone",
+      "nav-a-eval-phone",
+    ];
+    navLinksA.forEach((link) => {
+      const anchor = document.getElementById(link);
+      if (anchor) {
+        if (link === activeLinkId) {
+          anchor.classList.add("active");
+          anchor.style.textDecoration = "underline";
+        } else {
+          anchor.classList.remove("active");
+          anchor.style.textDecoration = "none";
+        }
+      }
+    });
+    // TODO render the image based on the current window
+    loadHeaderBackGroundImage(
+      "https://images.unsplash.com/photo-1488998427799-e3362cec87c3?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNvbXB1dGVyJTIwYm9va3xlbnwwfHwwfHx8MA%3D%3D"
+    );
+  };
+
+  const pageToActiveLinkDesktop = {
+    "/app/about_us.html": "nav-a-about",
+    "/app/calendarios.html": "nav-a-cal",
+    "/app/home.html": "nav-a-home",
+  };
+
+  const pageToActiveLinkPhone = {
+    "/app/about_us.html": "nav-a-about-phone",
+    "/app/calendarios.html": "nav-a-cal-phone",
+    "/app/home.html": "nav-a-home-phone",
+    "/app/tfgs_anteriores.html": "nav-a-tfgs-phone",
+    "/app/autoevaluacion.html": "nav-a-eval-phone",
+    "/app/requisitos_norm.html": "nav-a-req-phone",
+  };
   /**
    * Set the inactive state of the navbar
    * @param {NodeListOf<Element>} navLinks - The navigation links
@@ -136,7 +169,7 @@ export function setNavbarActives() {
   if (pageToActiveLinkDesktop[currentPath]) {
     setInitialStateActive(pageToActiveLinkDesktop[currentPath]);
   }
-  if (pageToActiveLinkPhone[currentPath]) {
+  if (pageToActiveLinkPhone[currentPath] && getWidthWindow() < 768) {
     setInitialStateActive(pageToActiveLinkPhone[currentPath]);
   }
 
@@ -215,37 +248,6 @@ export function setNavbarActives() {
     });
   });
 }
-
-/**
- * Set the initial state of the links
- * @param {string} - The active link id
- */
-const setInitialStateActive = (activeLinkId) => {
-  const navLinksA = [
-    "nav-a-home",
-    "nav-a-about",
-    "nav-a-cal",
-    "nav-a-req-phone",
-    "nav-a-home-phone",
-    "nav-a-cal-phone",
-    "nav-a-about-phone",
-    "nav-a-tfgs-phone",
-    "nav-a-eval-phone",
-  ];
-  navLinksA.forEach((link) => {
-    const anchor = document.getElementById(link);
-    if (anchor) {
-      if (link === activeLinkId) {
-        anchor.classList.add("active");
-        anchor.style.textDecoration = "underline";
-      } else {
-        anchor.classList.remove("active");
-        anchor.style.textDecoration = "none";
-      }
-    }
-  });
-};
-
 /**
  * Load the page content based on the navigation
  * @param {string} - The selected window based on navigation
@@ -267,10 +269,24 @@ function loadPageContent(href) {
         const getCurrentPage = window.location.pathname;
         if (getCurrentPage === "/app/tfgs_anteriores.html") {
           loadTFGSComponents();
+          loadHeaderBackGroundImage(
+            "https://images.unsplash.com/photo-1488998427799-e3362cec87c3?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNvbXB1dGVyJTIwYm9va3xlbnwwfHwwfHx8MA%3D%3D"
+          );
         } else if (getCurrentPage === "/app/about_us.html") {
           loadAboutUsComponents();
+          loadHeaderBackGroundImage(
+            "https://images.unsplash.com/photo-1488998427799-e3362cec87c3?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNvbXB1dGVyJTIwYm9va3xlbnwwfHwwfHx8MA%3D%3D"
+          );
         } else if (getCurrentPage === "/app/autoevaluacion.html") {
           loadForm();
+          loadHeaderBackGroundImage(
+            "https://images.unsplash.com/photo-1488998427799-e3362cec87c3?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNvbXB1dGVyJTIwYm9va3xlbnwwfHwwfHx8MA%3D%3D"
+          );
+        } else {
+          loadHeaderBackGroundImage(
+            "https://images.unsplash.com/photo-1488998427799-e3362cec87c3?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNvbXB1dGVyJTIwYm9va3xlbnwwfHwwfHx8MA%3D%3D"
+          );
+          console.log("Setting header");
         }
         setHeader();
         resolve(contentContainer);
@@ -285,7 +301,7 @@ function loadPageContent(href) {
  * Reset the state of the current loaded page
  * @param {HTMLDivElement} tempDiv
  */
-const resetStateOnLoadPage = (tempDiv) => {
+const resetStateOnLoadPage = async (tempDiv) => {
   const filterContent = tempDiv.querySelector("#content-container");
   if (filterContent) {
     filterContent.remove();
@@ -338,3 +354,21 @@ function setHeader() {
       break;
   }
 }
+
+/**
+ * Load the header backgroundImage
+ * @param {String} the path/src image to load
+ */
+const loadHeaderBackGroundImage = (imageHeader) => {
+  const navBar = document.getElementById("navbar-container");
+  const backGroundImage = document.createElement("img");
+  if (navBar.querySelector("#backGroundImage-navbar")) {
+    return;
+  }
+  backGroundImage.id = "backGroundImage-navbar";
+  backGroundImage.src = imageHeader;
+  backGroundImage.style.width = "100%";
+  backGroundImage.style.height = "100%";
+  backGroundImage.style.zIndex = "-10";
+  navBar.appendChild(backGroundImage);
+};
