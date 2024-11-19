@@ -136,3 +136,12 @@ export const loadForm = async () => {
   formValidation();
   await observeChangesForm();
 };
+
+
+export const loadHomeComponents = async () => {
+  await loadComponent("intro", "content-container");
+};
+
+export const loadCalendarComponents = async () => {
+  await loadComponent("calendar", "content-container");
+}

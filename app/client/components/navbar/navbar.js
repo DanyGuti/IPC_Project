@@ -2,6 +2,8 @@ import {
   loadTFGSComponents,
   loadAboutUsComponents,
   loadForm,
+  loadHomeComponents,
+  loadCalendarComponents
 } from "../../scripts/main.js";
 
 /**
@@ -282,7 +284,14 @@ function loadPageContent(href) {
           loadHeaderBackGroundImage(
             "https://images.unsplash.com/photo-1488998427799-e3362cec87c3?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNvbXB1dGVyJTIwYm9va3xlbnwwfHwwfHx8MA%3D%3D"
           );
-        } else {
+        }  else if (getCurrentPage === "/app/home.html") {
+          loadHomeComponents();
+        } else if (getCurrentPage === "/app/calendarios.html") {
+            loadCalendarComponents();
+
+
+        }
+        else {
           loadHeaderBackGroundImage(
             "https://images.unsplash.com/photo-1488998427799-e3362cec87c3?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNvbXB1dGVyJTIwYm9va3xlbnwwfHwwfHx8MA%3D%3D"
           );
