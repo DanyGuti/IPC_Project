@@ -118,9 +118,6 @@ export const loadTFGSComponents = async () => {
     "Memorias de TFGs ingeniería de computadores",
     cardPropsComputadores
   );
-  await loadHeaderBackGroundImage(
-    "https://images.unsplash.com/photo-1488998427799-e3362cec87c3?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNvbXB1dGVyJTIwYm9va3xlbnwwfHwwfHx8MA%3D%3D"
-  );
 };
 
 /**
@@ -128,9 +125,6 @@ export const loadTFGSComponents = async () => {
  */
 export const loadAboutUsComponents = async () => {
   await loadOutCardsAboutUs(cardPropsAboutUs);
-  await loadHeaderBackGroundImage(
-    "https://images.unsplash.com/photo-1488998427799-e3362cec87c3?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNvbXB1dGVyJTIwYm9va3xlbnwwfHwwfHx8MA%3D%3D"
-  );
 };
 
 /**
@@ -141,27 +135,4 @@ export const loadForm = async () => {
   constructFormLayoutPhone();
   formValidation();
   await observeChangesForm();
-  await loadHeaderBackGroundImage(
-    "https://images.unsplash.com/photo-1488998427799-e3362cec87c3?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNvbXB1dGVyJTIwYm9va3xlbnwwfHwwfHx8MA%3D%3D"
-  );
-};
-
-/**
- * Load the header backgroundImage
- * @param {String} the path/src image to load
- */
-const loadHeaderBackGroundImage = async (imageHeader) => {
-  setTimeout(async () => {
-    const navBar = document.getElementById("navbar-container");
-    const backGroundImage = document.createElement("img");
-    if (navBar.querySelector("#backGroundImage-navbar")) {
-      return;
-    }
-    backGroundImage.id = "backGroundImage-navbar";
-    backGroundImage.src = imageHeader;
-    backGroundImage.style.width = "100%";
-    backGroundImage.style.height = "100%";
-    backGroundImage.style.zIndex = "-10";
-    navBar.appendChild(backGroundImage);
-  }, 150);
 };
