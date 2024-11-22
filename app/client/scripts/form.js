@@ -143,12 +143,16 @@ export const constructFormLayoutPhone = () => {
 
 const resetStateForm = async (form) => {
   const formInputs = document.querySelectorAll(".form-check-input");
+  const formProgress = document.getElementById("progress-container");
   formInputs.forEach(async (input) => {
     input.checked = false;
   });
   form.classList.remove("was-validated");
   form.reset();
   await observeChangesForm();
+  formProgress.style.width = "0%";
+  formProgress.textContent = "0%";
+  formProgress.setAttribute("aria-valuenow", 0);
 };
 
 /**
@@ -157,6 +161,7 @@ const resetStateForm = async (form) => {
  */
 export const observeChangesForm = async () => {
   const forms = document.querySelectorAll(".form-check-input");
+  const formProgress = document.getElementById("progress-container");
   let totalQuestionsChecked = 0;
   const documentButton = document.getElementById("submit-form-button");
   let indexesAnswers = Array(forms.length).fill(false);
@@ -175,12 +180,18 @@ export const observeChangesForm = async () => {
       }
       totalQuestionsChecked = indexesAnswers.reduce((acc, curr) => {
         if (curr) {
+          formProgress.setAttribute("aria-valuenow", 25 * (acc + 1));
+          formProgress.style.width = `${25 * (acc + 1)}%`;
+          formProgress.textContent = `${25 * (acc + 1)}%`;
           return acc + 1;
         }
         return acc;
       }, 0);
       if (totalQuestionsChecked === questionsAutoEval.length) {
         documentButton.disabled = false;
+        formProgress.style.width = "100%";
+        formProgress.textContent = "100%";
+        formProgress.setAttribute("aria-valuenow", 100);
       } else {
         documentButton.disabled = true;
       }
