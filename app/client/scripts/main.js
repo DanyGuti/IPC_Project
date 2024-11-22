@@ -28,7 +28,6 @@ import {
   onFocusSearchBar,
   formSearchBarEvents,
 } from "../../client/components/navbar/searchbar.js";
-
 /**
  * Load the passed html componnet
  * @param {String} componentName the name of the HTML component
@@ -139,6 +138,7 @@ export const loadAboutUsComponents = async () => {
  */
 export const loadForm = async () => {
   await loadComponent("form", "content-container");
+  // await loadComponent("progress_bar", "form-eval");
   constructFormLayoutPhone();
   formValidation();
   await observeChangesForm();

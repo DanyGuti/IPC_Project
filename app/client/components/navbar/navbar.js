@@ -166,6 +166,33 @@ export async function setNavbarActives() {
   const currentPath = window.location.pathname;
   let selectedLinkDesktop = pageToActiveLinkDesktop[currentPath];
   let selectedLinkPhone = pageToActiveLinkPhone[currentPath];
+  if (!selectedLinkDesktop && selectedLinkPhone && getWidthWindow() > 768) {
+    let selectedLinkDesktopNotNull = pageToActiveLinkPhone[currentPath];
+    switch (selectedLinkDesktopNotNull) {
+      case "nav-a-about-phone":
+        selectedLinkDesktopNotNull = "nav-a-about";
+        break;
+      case "nav-a-cal-phone":
+        selectedLinkDesktopNotNull = "nav-a-cal";
+        break;
+      case "nav-a-home-phone":
+        selectedLinkDesktopNotNull = "nav-a-home";
+        break;
+      case "nav-a-tfgs-phone":
+        selectedLinkDesktopNotNull = "nav-a-tfgs";
+        break;
+      case "nav-a-eval-phone":
+        selectedLinkDesktopNotNull = "nav-a-eval";
+        break;
+      case "nav-a-req-phone":
+        selectedLinkDesktopNotNull = "nav-a-req";
+        break;
+      default:
+        selectedLinkDesktopNotNull = "nav-a-home";
+        break;
+    }
+    pageToActiveLinkDesktop[currentPath] = selectedLinkDesktopNotNull;
+  }
   if (pageToActiveLinkDesktop[currentPath]) {
     setInitialStateActive(pageToActiveLinkDesktop[currentPath]);
   }
@@ -286,7 +313,6 @@ function loadPageContent(href) {
           loadHeaderBackGroundImage(
             "https://images.unsplash.com/photo-1488998427799-e3362cec87c3?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNvbXB1dGVyJTIwYm9va3xlbnwwfHwwfHx8MA%3D%3D"
           );
-          console.log("Setting header");
         }
         setHeader();
         resolve(contentContainer);
@@ -324,6 +350,8 @@ function setHeader() {
   const getCurrentPage = window.location.pathname;
   const header = document.getElementById("header-container");
   header.innerHTML = "";
+  header.style.textAlign = "center";
+  header.style.marginTop = "5%";
   switch (getCurrentPage) {
     case "/app/home.html":
       header.innerHTML = "<h1>Welcome to Home Page</h1>";
@@ -368,7 +396,8 @@ const loadHeaderBackGroundImage = (imageHeader) => {
   backGroundImage.id = "backGroundImage-navbar";
   backGroundImage.src = imageHeader;
   backGroundImage.style.width = "100%";
-  backGroundImage.style.height = "100%";
+  backGroundImage.style.height = getWidthWindow() < 768 ? "100%" : "450px";
   backGroundImage.style.zIndex = "-10";
+  backGroundImage.style.objectFit = "cover";
   navBar.appendChild(backGroundImage);
 };
