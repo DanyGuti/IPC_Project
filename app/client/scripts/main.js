@@ -24,12 +24,16 @@ import {
   observeChangesForm,
 } from "../scripts/form.js";
 
+import {
+  onFocusSearchBar,
+  formSearchBarEvents,
+} from "../../client/components/navbar/searchbar.js";
 /**
  * Load the passed html componnet
  * @param {String} componentName the name of the HTML component
  * @param {String} containerId the container to insert the HTML component
  */
-export function loadComponent(componentName, containerId) {
+export const loadComponent = (componentName, containerId) => {
   return new Promise((resolve, reject) => {
     fetch(`./client/components/${componentName}.html`)
       .then((response) => response.text())
@@ -49,16 +53,16 @@ export function loadComponent(componentName, containerId) {
         reject(error);
       });
   });
-}
+};
 
-export function getWidthWindow() {
+export const getWidthWindow = () => {
   return window.innerWidth;
-}
+};
 
 /**
  * Set the navigation nav bar menu
  */
-export function setNavbarMenu() {
+export const setNavbarMenu = () => {
   const width = getWidthWindow();
   // phone
   if (width < 768) {
@@ -87,15 +91,17 @@ export function setNavbarMenu() {
           });
         closeDropdownNavBar();
         setNavbarActives();
+        onFocusSearchBar();
+        formSearchBarEvents();
       });
   }
-}
+};
 
-window.addEventListener("load", function () {
+window.addEventListener("load", () => {
   setNavbarActives();
 });
 
-window.addEventListener("resize", function () {
+window.addEventListener("resize", () => {
   setNavbarMenu();
 });
 
@@ -132,6 +138,7 @@ export const loadAboutUsComponents = async () => {
  */
 export const loadForm = async () => {
   await loadComponent("form", "content-container");
+  // await loadComponent("progress_bar", "form-eval");
   constructFormLayoutPhone();
   formValidation();
   await observeChangesForm();

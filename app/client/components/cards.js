@@ -13,6 +13,7 @@ export async function loadOutCardLayoutTfgs(
 ) {
   setTimeout(async () => {
     const mainContent = document.getElementById("content-container");
+    mainContent.style.marginTop = "5%";
     const headerContainer = document.getElementById("header-container");
     const columnsPerRow = 2;
     headerContainer.zIndex = "100";
@@ -36,7 +37,7 @@ export async function loadOutCardLayoutTfgs(
     divider.style.width = "100%";
     paragraph.textContent = rowLayoutTitle;
     paragraph.style.fontSize = "1.5rem";
-    paragraph.style.fontWeight = "medium";
+    paragraph.style.fontWeight = "500";
 
     const wrapper = document.createElement("div");
     wrapper.style.display = "flex";
@@ -44,13 +45,13 @@ export async function loadOutCardLayoutTfgs(
     wrapper.style.justifyContent = "start";
     wrapper.style.alignItems = "center";
     wrapper.style.width = "100%";
-    wrapper.style.height = "60%";
+    wrapper.style.height = "40%";
     wrapper.appendChild(rowContainer);
     divider.appendChild(paragraph);
     mainContent.appendChild(divider);
 
     rowContainer.style.width = "100%";
-    rowContainer.style.height = "45%";
+    rowContainer.style.height = "10%";
 
     mainContent.appendChild(wrapper);
 
@@ -64,6 +65,7 @@ export async function loadOutCardLayoutTfgs(
       const cardBody = card.querySelector("#props-card-body");
       cardImage.src = cardData.imageSrc;
       cardBody.querySelector(".card-title").textContent = cardData.title;
+      cardBody.querySelector(".card-title").style.fontWeight = "bold";
       cardBody.querySelector(".card-text").textContent = cardData.text;
       const linkElement = cardBody.querySelector(".text-muted");
       linkElement.innerHTML = `<a href="${cardData.linkUrl}" target="_blank">Ver memoria</a>`;
@@ -88,11 +90,13 @@ export async function loadOutCardLayoutTfgs(
     const cardBody = card.querySelector("#props-card-body");
     cardImage.src = cardData.imageSrc;
     cardBody.querySelector(".card-title").textContent = cardData.title;
+    cardBody.querySelector(".card-title").style.fontWeight = "bold";
     cardBody.querySelector(".card-text").textContent = cardData.text;
     const linkElement = cardBody.querySelector(".text-muted");
     linkElement.innerHTML = `<a href="${cardData.linkUrl}" target="_blank">Ver memoria</a>`;
 
     thirdCardRowContainer.appendChild(card);
+    thirdCardRowContainer.style.marginBottom = "5%";
   }, 100);
 }
 
