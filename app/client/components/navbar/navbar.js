@@ -107,9 +107,11 @@ export async function setNavbarActives() {
         if (link === activeLinkId) {
           anchor.classList.add("active");
           anchor.style.textDecoration = "underline";
+          anchor.style.opacity = "1";
         } else {
           anchor.classList.remove("active");
           anchor.style.textDecoration = "none";
+          anchor.style.opacity = "0.5";
         }
       }
     });
@@ -162,6 +164,7 @@ export async function setNavbarActives() {
   const startingActive = document.querySelector(".nav-item.active");
   if (startingActive) {
     startingActive.querySelector("a").style.textDecoration = "underline";
+    startingActive.querySelector("a").style.opacity = "1";
   }
   const currentPath = window.location.pathname;
   let selectedLinkDesktop = pageToActiveLinkDesktop[currentPath];
@@ -243,19 +246,23 @@ export async function setNavbarActives() {
         document.getElementById(selectedLinkDesktop) || null;
       if (underlinedPhone) {
         underlinedPhone.style.textDecoration = "none";
+        underlinedPhone.style.opacity = "0.5";
       }
       if (underlinedDesktop) {
         underlinedDesktop.style.textDecoration = "none";
+        underlinedPhone.style.opacity = "0.5";
       }
       if (currentActive && !hasClickedDropdown) {
         currentActive.classList.remove("active");
         currentActive.querySelector("a").style.textDecoration = "none";
+        currentActive.querySelector("a").style.opacity = "0.5";
       }
       if (link.classList.contains("dropdown-item")) {
         return;
       }
       link.classList.add("active");
       link.querySelector("a").style.textDecoration = "underline";
+      link.querySelector("a").style.opacity = "1";
       const href = link.querySelector("a").getAttribute("href");
       window.history.pushState({ path: href }, "", href);
       if (getWidthWindow() > 768) {
