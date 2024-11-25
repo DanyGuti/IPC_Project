@@ -150,9 +150,11 @@ const resetStateForm = async (form) => {
   form.classList.remove("was-validated");
   form.reset();
   await observeChangesForm();
-  formProgress.style.width = "0%";
-  formProgress.textContent = "0%";
-  formProgress.setAttribute("aria-valuenow", 0);
+  if (formProgress) {
+    formProgress.setAttribute("aria-valuenow", 0);
+    formProgress.style.width = "0%";
+    formProgress.textContent = "0%";
+  }
 };
 
 /**
@@ -180,18 +182,22 @@ export const observeChangesForm = async () => {
       }
       totalQuestionsChecked = indexesAnswers.reduce((acc, curr) => {
         if (curr) {
-          formProgress.setAttribute("aria-valuenow", 25 * (acc + 1));
-          formProgress.style.width = `${25 * (acc + 1)}%`;
-          formProgress.textContent = `${25 * (acc + 1)}%`;
+          if (formProgress) {
+            formProgress.setAttribute("aria-valuenow", 25 * (acc + 1));
+            formProgress.style.width = `${25 * (acc + 1)}%`;
+            formProgress.textContent = `${25 * (acc + 1)}%`;
+          }
           return acc + 1;
         }
         return acc;
       }, 0);
       if (totalQuestionsChecked === questionsAutoEval.length) {
         documentButton.disabled = false;
-        formProgress.style.width = "100%";
-        formProgress.textContent = "100%";
-        formProgress.setAttribute("aria-valuenow", 100);
+        if (formProgress) {
+          formProgress.setAttribute("aria-valuenow", 100);
+          formProgress.style.width = "100%";
+          formProgress.textContent = "100%";
+        }
       } else {
         documentButton.disabled = true;
       }

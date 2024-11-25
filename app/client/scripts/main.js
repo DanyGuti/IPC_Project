@@ -109,6 +109,29 @@ window.addEventListener("resize", () => {
  * Render TFGS card components in DOM
  */
 export const loadTFGSComponents = async () => {
+  const mainContent = document.getElementById("content-container");
+  const titleContainer = document.createElement("div");
+  titleContainer.style.display = "flex";
+  titleContainer.style.flexDirection = "row";
+  titleContainer.style.width = "100%";
+  titleContainer.style.justifyContent = "start";
+  titleContainer.style.alignItems = "start";
+  titleContainer.style.marginTop = "2%";
+  titleContainer.style.marginBottom = "5%";
+  const title = document.createElement("h2");
+  title.textContent = "Mejores Memorias Ciclo: 2023-2024";
+  title.style.fontWeight = "600";
+  titleContainer.appendChild(title);
+
+  const divider1 = document.createElement("div");
+  divider1.style.display = "flex";
+  divider1.style.flexDirection = "row";
+  divider1.style.width = "95%";
+  divider1.style.marginBottom = "3%";
+  divider1.style.backgroundColor = "black";
+  divider1.style.height = "1px";
+  mainContent.appendChild(titleContainer);
+  mainContent.appendChild(divider1);
   await loadOutCardLayoutTfgs(
     0,
     "Memorias de TFG's de Computación",
