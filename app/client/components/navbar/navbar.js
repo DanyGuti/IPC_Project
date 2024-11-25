@@ -101,6 +101,36 @@ export async function setNavbarActives() {
       "nav-a-tfgs-phone",
       "nav-a-eval-phone",
     ];
+    const navLinksDropdown = [
+      "auto-eval-a-nav",
+      "tfgs-a-nav",
+      "requisitos-a-nav",
+    ];
+    if (
+      (getWidthWindow() > 768 && activeLinkId === "nav-a-eval") ||
+      activeLinkId === "nav-a-tfgs" ||
+      activeLinkId === "nav-a-req"
+    ) {
+      const mappingDesktop = {
+        "nav-a-eval": "auto-eval-a-nav",
+        "nav-a-tfgs": "tfgs-a-nav",
+        "nav-a-req": "requisitos-a-nav",
+      };
+      const parentAnchor = document.getElementById("a-toggler-dropdown");
+      if (parentAnchor) {
+        parentAnchor.style.textDecoration = "underline";
+      }
+      navLinksDropdown.forEach((link) => {
+        const anchor = document.getElementById(link);
+        if (anchor) {
+          if (link === mappingDesktop[activeLinkId]) {
+            anchor.classList.add("active");
+          } else {
+            anchor.classList.remove("active");
+          }
+        }
+      });
+    }
     navLinksA.forEach((link) => {
       const anchor = document.getElementById(link);
       if (anchor) {
@@ -227,9 +257,15 @@ export async function setNavbarActives() {
       });
       if (currentActive && !hasClickedDropdown) {
         currentActive.classList.remove("active");
-        currentActive.querySelector("a").style.textDecoration = "none";
+        if (currentActive.querySelector("a")) {
+          currentActive.querySelector("a").style.textDecoration = "none";
+          currentActive.querySelector("a").style.opacity = "0.5";
+        }
       }
       link.classList.add("active");
+      // get parent node and add style
+      const parentAnchor = document.getElementById("a-toggler-dropdown");
+      parentAnchor.style.textDecoration = "underline";
       const href = link.getAttribute("href");
       window.history.pushState({ path: href }, "", href);
       hasClickedDropdown = true;
@@ -250,12 +286,18 @@ export async function setNavbarActives() {
       }
       if (underlinedDesktop) {
         underlinedDesktop.style.textDecoration = "none";
-        underlinedPhone.style.opacity = "0.5";
+        underlinedDesktop.style.opacity = "0.5";
       }
       if (currentActive && !hasClickedDropdown) {
         currentActive.classList.remove("active");
-        currentActive.querySelector("a").style.textDecoration = "none";
-        currentActive.querySelector("a").style.opacity = "0.5";
+        if (currentActive.querySelector("a")) {
+          currentActive.querySelector("a").style.textDecoration = "none";
+          currentActive.querySelector("a").style.opacity = "0.5";
+        }
+        if (getWidthWindow() > 768) {
+          const parentAnchor = document.getElementById("a-toggler-dropdown");
+          parentAnchor.style.textDecoration = "none";
+        }
       }
       if (link.classList.contains("dropdown-item")) {
         return;
@@ -263,6 +305,10 @@ export async function setNavbarActives() {
       link.classList.add("active");
       link.querySelector("a").style.textDecoration = "underline";
       link.querySelector("a").style.opacity = "1";
+      if (getWidthWindow() > 768) {
+        const parentAnchor = document.getElementById("a-toggler-dropdown");
+        parentAnchor.style.textDecoration = "none";
+      }
       const href = link.querySelector("a").getAttribute("href");
       window.history.pushState({ path: href }, "", href);
       if (getWidthWindow() > 768) {
