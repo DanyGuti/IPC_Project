@@ -166,3 +166,7 @@ export const loadForm = async () => {
   formValidation();
   await observeChangesForm();
 };
+
+export const loadCalendars = async () => {
+  await loadComponent("calendarios_phone", "content-container");
+};
