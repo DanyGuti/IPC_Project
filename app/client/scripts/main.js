@@ -35,7 +35,7 @@ import {
  */
 export const loadComponent = (componentName, containerId) => {
   return new Promise((resolve, reject) => {
-    fetch(`./client/components/${componentName}.html`)
+    fetch(`/IPC_Project/app/client/components/${componentName}.html`)
       .then((response) => response.text())
       .then((html) => {
         const container = document.getElementById(containerId);
@@ -66,7 +66,7 @@ export const setNavbarMenu = () => {
   const width = getWidthWindow();
   // phone
   if (width < 768) {
-    fetch("./client/components/navbar/burger-menu.html")
+    fetch("/IPC_Project/app/client/components/navbar/burger-menu.html")
       .then((response) => response.text())
       .then((html) => {
         document.getElementById("navbar-container").innerHTML = html;
@@ -80,7 +80,7 @@ export const setNavbarMenu = () => {
       });
   } else {
     // desktop
-    fetch("./client/components/navbar/navbar-menu.html")
+    fetch("/IPC_Project/app/client/components/navbar/navbar-menu.html")
       .then((response) => response.text())
       .then((html) => {
         document.getElementById("navbar-container").innerHTML = html;
