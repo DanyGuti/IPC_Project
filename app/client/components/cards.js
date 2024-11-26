@@ -40,6 +40,7 @@ export async function loadOutCardLayoutTfgs(
     paragraph.style.fontWeight = "500";
 
     const wrapper = document.createElement("div");
+    wrapper.id = "wrapper-cards";
     wrapper.style.display = "flex";
     wrapper.style.flexDirection = "column";
     wrapper.style.justifyContent = "start";
@@ -97,7 +98,7 @@ export async function loadOutCardLayoutTfgs(
 
     thirdCardRowContainer.appendChild(card);
     thirdCardRowContainer.style.marginBottom = "5%";
-  }, 100);
+  }, 1);
 }
 
 /**
@@ -117,9 +118,9 @@ export async function loadOutCardsAboutUs(cardProps) {
     const objectiveDivider = document.createElement("div");
 
     // Create the ¿Quiénes somos? title
-    const objectiveParagraph = document.createElement("h4");
+    const objectiveParagraph = document.createElement("h1");
     objectiveParagraph.textContent = "Objetivos";
-    objectiveDivider.style.marginTop = "5%";
+    objectiveDivider.style.marginTop = "2%";
     const descriptionObjective = document.createElement("p");
     const descriptionObjective2 = document.createElement("p");
     descriptionObjective.textContent =
@@ -167,12 +168,11 @@ export async function loadOutCardsAboutUs(cardProps) {
     mainContent.appendChild(bibliographies);
 
     const divider = document.createElement("div");
-    const paragraph = document.createElement("h2");
+    const paragraph = document.createElement("h1");
     divider.style.display = "flex";
     divider.style.flexDirection = "row";
     divider.style.width = "100%";
     paragraph.textContent = "¿Quiénes somos?";
-    paragraph.style.fontSize = "1.5rem";
 
     divider.appendChild(paragraph);
     mainContent.appendChild(divider);
@@ -183,7 +183,7 @@ export async function loadOutCardsAboutUs(cardProps) {
     rowContainer.style.flexDirection = "row";
     rowContainer.style.justifyContent = "flex-start";
     rowContainer.style.gap = "5%";
-    rowContainer.style.marginTop = "5%";
+    rowContainer.style.marginTop = "2%";
     rowContainer.style.marginBottom = "5%";
     rowContainer.style.width = "100%";
     rowContainer.style.height = "32%";
@@ -199,6 +199,8 @@ export async function loadOutCardsAboutUs(cardProps) {
       const cardBody = card.querySelector("#props-card-body");
       cardImage.src = cardData.imageSrc;
       cardBody.querySelector(".card-text").textContent = cardData.name;
+      cardBody.querySelector(".card-text").style.fontWeight = "500";
+      cardBody.querySelector(".card-text").style.fontSize = "1.5rem";
     }
     idRowLayout++;
     const rowContainer2 = document.createElement("div");
@@ -221,6 +223,115 @@ export async function loadOutCardsAboutUs(cardProps) {
       const cardBody = card.querySelector("#props-card-body");
       cardImage.src = cardData.imageSrc;
       cardBody.querySelector(".card-text").textContent = cardData.name;
+      cardBody.querySelector(".card-text").style.fontWeight = "500";
+      cardBody.querySelector(".card-text").style.fontSize = "1.5rem";
     }
   }, 100);
+}
+
+/**
+ * Load the card component with the given id into the container with the given id
+ * @param {int} idRowLayout - The id of the component to load
+ * @param {string} rowLayoutTitle - The string of the container
+ * @param {[object]} cardProps - The properties of the card
+ */
+export async function loadOutCardTfgsDesktop(
+  idRowLayout,
+  rowLayoutTitle,
+  cardProps
+) {
+  setTimeout(async () => {
+    const wrapperContainer = document.getElementById("wrapper-cards");
+    if (wrapperContainer) {
+      return;
+    }
+    const mainContent = document.getElementById("content-container");
+    mainContent.style.marginTop = "5%";
+    const headerContainer = document.getElementById("header-container");
+    const columnsPerRow = 2;
+    headerContainer.zIndex = "100";
+    headerContainer.style.position = "absolute";
+    mainContent.style.position = "relative";
+    mainContent.style.flexDirection = "column";
+
+    const rowContainer = document.createElement("div");
+    rowContainer.id = `row-cards-${idRowLayout}`;
+    rowContainer.style.display = "flex";
+    rowContainer.style.flexDirection = "row";
+    rowContainer.style.justifyContent = "flex-start";
+    rowContainer.style.gap = "5%";
+    rowContainer.style.marginTop = "5%";
+    rowContainer.style.marginBottom = "10%";
+
+    const divider = document.createElement("div");
+    const paragraph = document.createElement("p");
+    divider.style.display = "flex";
+    divider.style.flexDirection = "row";
+    divider.style.width = "100%";
+    paragraph.textContent = rowLayoutTitle;
+    paragraph.style.fontSize = "2.3rem";
+    paragraph.style.fontWeight = "500";
+
+    const wrapper = document.createElement("div");
+    wrapper.id = "wrapper-cards-desktop";
+    wrapper.style.display = "flex";
+    wrapper.style.flexDirection = "column";
+    wrapper.style.justifyContent = "start";
+    wrapper.style.alignItems = "center";
+    wrapper.style.width = "100%";
+    wrapper.style.height = "40%";
+    wrapper.appendChild(rowContainer);
+    divider.appendChild(paragraph);
+    mainContent.appendChild(divider);
+
+    rowContainer.style.width = "100%";
+    rowContainer.style.height = "10%";
+
+    mainContent.appendChild(wrapper);
+
+    for (let i = 0; i < columnsPerRow; i++) {
+      await loadComponent("tfgs_card_desktop", `row-cards-${idRowLayout}`);
+      const card = document.getElementById("card-tfg-desktop");
+      card.id = `card-tfg-desktop-${i}`;
+      // Add the cards to the row
+      const cardData = cardProps[i];
+      const cardBody = card.querySelector("#props-card-body");
+      cardBody.querySelector(".card-title").textContent = cardData.title;
+      cardBody.querySelector(".card-title").style.fontWeight = "bold";
+      cardBody.querySelector(".card-text").textContent = cardData.text;
+      const iframe = document.createElement("iframe");
+      iframe.src = cardData.linkUrl;
+      iframe.style.width = "100%";
+      iframe.style.height = "100%";
+      card.appendChild(iframe);
+      rowContainer.appendChild(card);
+    }
+    const thirdCardRowContainer = document.createElement("div");
+    thirdCardRowContainer.id = `row-cards-${idRowLayout}-2`;
+    thirdCardRowContainer.style.display = "flex";
+    thirdCardRowContainer.style.flexDirection = "row";
+    thirdCardRowContainer.alignItems = "center";
+    thirdCardRowContainer.style.width = "100%";
+    thirdCardRowContainer.style.height = "35%";
+    thirdCardRowContainer.style.justifyContent = "center";
+    wrapper.appendChild(thirdCardRowContainer);
+
+    // Add the third card below the first two in the middle
+    await loadComponent("tfgs_card_desktop", `row-cards-${idRowLayout}`);
+    const card = document.getElementById("card-tfg-desktop");
+    card.id = `card-tfg-desktop-${idRowLayout}-2`;
+    const cardData = cardProps[2];
+    const cardBody = card.querySelector("#props-card-body");
+    cardBody.querySelector(".card-title").textContent = cardData.title;
+    cardBody.querySelector(".card-title").style.fontWeight = "bold";
+    cardBody.querySelector(".card-text").textContent = cardData.text;
+    const iframe = document.createElement("iframe");
+    iframe.src = cardData.linkUrl;
+    iframe.style.width = "100%";
+    iframe.style.height = "100%";
+    card.appendChild(iframe);
+
+    thirdCardRowContainer.appendChild(card);
+    thirdCardRowContainer.style.marginBottom = "5%";
+  }, 1);
 }

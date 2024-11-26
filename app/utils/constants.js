@@ -113,3 +113,5 @@ export const cardPropsBibliographies = [
       "https://www.ehu.eus/documents/340468/2334257/Normativa_UPVEHU_cas",
   },
 ];
+
+export const absolutePath = "/IPC_Project/app";
