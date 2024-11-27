@@ -299,11 +299,50 @@ export async function loadOutCardTfgsDesktop(
       cardBody.querySelector(".card-title").textContent = cardData.title;
       cardBody.querySelector(".card-title").style.fontWeight = "bold";
       cardBody.querySelector(".card-text").textContent = cardData.text;
-      const iframe = document.createElement("iframe");
-      iframe.src = cardData.linkUrl;
-      iframe.style.width = "100%";
-      iframe.style.height = "100%";
-      card.appendChild(iframe);
+      const buttonFRow = document.createElement("button");
+      buttonFRow.id = `button-show-more-${i}`;
+      buttonFRow.style.padding = "2%";
+      buttonFRow.type = "button";
+      buttonFRow.style.width = "35%";
+      buttonFRow.style.height = "22%";
+      buttonFRow.className = "btn btn-primary";
+      buttonFRow.textContent = "Ver PDF memoria";
+      buttonFRow.style.opacity = "0.89";
+      // align button to the center
+      buttonFRow.style.margin = "auto";
+      buttonFRow.style.marginBottom = "2%";
+      buttonFRow.addEventListener("click", () => {
+        const iframe = document.createElement("iframe");
+        iframe.src = cardData.linkUrl;
+        iframe.style.width = "100%";
+        iframe.style.height = "100%";
+        if (iframe) card.appendChild(iframe);
+        buttonFRow.style.display = "none";
+        card.style.height = "500px";
+        card.style.transition = "height 0.5s";
+        cardBody.querySelector(".card-text").style.display = "none";
+        const buttonHidePdf = document.createElement("button");
+        buttonHidePdf.id = `button-hide-pdf-${i}`;
+        buttonHidePdf.type = "button";
+        buttonHidePdf.style.width = "25%";
+        buttonHidePdf.style.height = "8%";
+        buttonHidePdf.className = "btn btn-primary";
+        buttonHidePdf.textContent = "Ocultar PDF";
+        buttonHidePdf.style.opacity = "0.89";
+        // align button to the center
+        buttonHidePdf.style.margin = "auto";
+        buttonHidePdf.style.marginBottom = "2%";
+        buttonHidePdf.addEventListener("click", () => {
+          iframe.style.display = "none";
+          buttonFRow.style.display = "block";
+          card.style.height = "200px";
+          cardBody.querySelector(".card-text").style.display = "block";
+          buttonHidePdf.style.display = "none";
+        });
+        card.appendChild(buttonHidePdf);
+        card.appendChild(iframe);
+      });
+      card.appendChild(buttonFRow);
       rowContainer.appendChild(card);
     }
     const thirdCardRowContainer = document.createElement("div");
@@ -325,11 +364,50 @@ export async function loadOutCardTfgsDesktop(
     cardBody.querySelector(".card-title").textContent = cardData.title;
     cardBody.querySelector(".card-title").style.fontWeight = "bold";
     cardBody.querySelector(".card-text").textContent = cardData.text;
-    const iframe = document.createElement("iframe");
-    iframe.src = cardData.linkUrl;
-    iframe.style.width = "100%";
-    iframe.style.height = "100%";
-    card.appendChild(iframe);
+    const buttonSRow = document.createElement("button");
+    buttonSRow.id = `button-show-more-2`;
+    buttonSRow.style.padding = "2%";
+    buttonSRow.type = "button";
+    buttonSRow.style.width = "35%";
+    buttonSRow.className = "btn btn-primary";
+    buttonSRow.textContent = "Ver PDF memoria";
+    buttonSRow.style.height = "22%";
+    buttonSRow.style.opacity = "0.89";
+    // align button to the center
+    buttonSRow.style.margin = "auto";
+    buttonSRow.style.marginBottom = "2%";
+    buttonSRow.addEventListener("click", () => {
+      const iframe = document.createElement("iframe");
+      iframe.src = cardData.linkUrl;
+      iframe.style.width = "100%";
+      iframe.style.height = "100%";
+      buttonSRow.style.display = "none";
+      // Expand the card
+      card.style.height = "500px";
+      card.style.transition = "height 0.5s";
+      cardBody.querySelector(".card-text").style.display = "none";
+      const buttonHidePdf = document.createElement("button");
+      buttonHidePdf.id = `button-hide-pdf-2`;
+      buttonHidePdf.type = "button";
+      buttonHidePdf.style.width = "25%";
+      buttonHidePdf.style.height = "8%";
+      buttonHidePdf.className = "btn btn-primary";
+      buttonHidePdf.textContent = "Ocultar PDF";
+      buttonHidePdf.style.opacity = "0.89";
+      // align button to the center
+      buttonHidePdf.style.margin = "auto";
+      buttonHidePdf.style.marginBottom = "2%";
+      buttonHidePdf.addEventListener("click", () => {
+        iframe.style.display = "none";
+        buttonSRow.style.display = "block";
+        card.style.height = "200px";
+        cardBody.querySelector(".card-text").style.display = "block";
+        buttonHidePdf.style.display = "none";
+      });
+      card.appendChild(buttonHidePdf);
+      card.appendChild(iframe);
+    });
+    card.appendChild(buttonSRow);
 
     thirdCardRowContainer.appendChild(card);
     thirdCardRowContainer.style.marginBottom = "5%";

@@ -212,3 +212,11 @@ export const loadForm = async () => {
 export const loadCalendars = async () => {
   await loadComponent("calendarios_phone", "content-container");
 };
+
+export const setFooter = () => {
+  fetch(`${absolutePath}/client/components/footer/footer.html`)
+    .then((response) => response.text())
+    .then((html) => {
+      document.getElementById("footer-container").innerHTML = html;
+    });
+};

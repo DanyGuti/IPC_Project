@@ -362,7 +362,6 @@ function loadPageContent(href) {
             }
           } else {
             const card = document.getElementById("row-cards-0");
-            console.log(card);
             if (!card || card.childElementCount === 0) {
               loadOutCardLayoutTfgsDesktop();
             }

@@ -69,10 +69,10 @@ export const questionsAutoEval = [
     question:
       "¿Qué es necesario conocer con antelación para la oferta, inscripción y aprobación de un trabajo de fin de grado?",
     answers: [
-      "especialidad, tipo, dirección y tutor",
-      "especialidad, tipo, dirección, recursos necesarios, recomendaciones, propiedad intelectual, y derechos de publicación",
-      "especialidad, tipo, dirección, recursos necesarios y tutor",
-      "especialidad, tipo, dirección, recursos necesarios, recomendaciones, tutor, propiedad intelectual, y derechos de publicación",
+      "Especialidad, tipo, dirección y tutor",
+      "Especialidad, tipo, dirección, recursos necesarios, recomendaciones, propiedad intelectual, y derechos de publicación",
+      "Especialidad, tipo, dirección, recursos necesarios y tutor",
+      "Especialidad, tipo, dirección, recursos necesarios, recomendaciones, tutor, propiedad intelectual, y derechos de publicación",
     ],
     correct: 1,
   },

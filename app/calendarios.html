@@ -11,6 +11,7 @@
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
   <link rel="stylesheet" href="/IPC_Project/app/client/components/styles/styles.css">
+  <link rel="stylesheet" href="/IPC_Project/app/client/components/styles/footer.styles.css">
   <style>
     html,
     body {
@@ -27,10 +28,13 @@
   </div>
   <div id="content-container" style="margin-left: 5%; display:flex; height:auto; justify-content:flex-start;">
   </div>
+  <div id="footer-container" class="footer-basic">
+  </div>
 </body>
 <script type="module">
-  import { setNavbarMenu } from "./client/scripts/main.js";
+  import { setNavbarMenu, setFooter } from "./client/scripts/main.js";
   setNavbarMenu();
+  setFooter();
 </script>
 
 </html>
