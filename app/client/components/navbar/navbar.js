@@ -1,6 +1,7 @@
 import {
   loadTFGSComponents,
   loadAboutUsComponents,
+  loadOutCardLayoutTfgsDesktop,
   loadForm,
   loadCalendars,
 } from "../../scripts/main.js";
@@ -125,6 +126,9 @@ export async function setNavbarActives() {
         const anchor = document.getElementById(link);
         if (anchor) {
           if (link === mappingDesktop[activeLinkId]) {
+            if (link === "tfgs-a-nav") {
+              loadPageContent("");
+            }
             anchor.classList.add("active");
           } else {
             anchor.classList.remove("active");
@@ -136,6 +140,9 @@ export async function setNavbarActives() {
       const anchor = document.getElementById(link);
       if (anchor) {
         if (link === activeLinkId) {
+          if (link === "nav-a-tfgs-phone") {
+            loadPageContent("");
+          }
           anchor.classList.add("active");
           anchor.style.textDecoration = "underline";
           anchor.style.opacity = "1";
@@ -237,7 +244,6 @@ export async function setNavbarActives() {
   if (navLinks.length === 0) {
     loadPageContent("");
   }
-
   let dropdownLinks = getDropdownLinks(navLinks);
   let hasClickedDropdown = false;
   const anchorActives = [
@@ -349,7 +355,17 @@ function loadPageContent(href) {
         contentContainer.innerHTML = tempDiv.innerHTML;
         const getCurrentPage = window.location.pathname;
         if (getCurrentPage === "/IPC_Project/app/tfgs_anteriores.html") {
-          loadTFGSComponents();
+          if (getWidthWindow() < 768) {
+            const card = document.getElementById("row-cards-0");
+            if (!card || card.childElementCount === 0) {
+              loadTFGSComponents();
+            }
+          } else {
+            const card = document.getElementById("row-cards-0");
+            if (!card || card.childElementCount === 0) {
+              loadOutCardLayoutTfgsDesktop();
+            }
+          }
           loadHeaderBackGroundImage(
             "https://images.unsplash.com/photo-1488998427799-e3362cec87c3?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNvbXB1dGVyJTIwYm9va3xlbnwwfHwwfHx8MA%3D%3D"
           );
@@ -369,9 +385,13 @@ function loadPageContent(href) {
             "https://images.unsplash.com/photo-1488998427799-e3362cec87c3?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNvbXB1dGVyJTIwYm9va3xlbnwwfHwwfHx8MA%3D%3D"
           );
           // Apply all the styles to the calendars:
-          // const calendarContainer =
-          //   document.getElementById("phone-calendars");
-          // if (calendarContainer) {
+          const calendarContainer = document.getElementById("phone-calendars");
+          if (calendarContainer) {
+            const tables = calendarContainer.getElementsByTagName("table");
+            for (const table of tables) {
+              table.classList.add("table");
+            }
+          }
         } else {
           loadHeaderBackGroundImage(
             "https://images.unsplash.com/photo-1488998427799-e3362cec87c3?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNvbXB1dGVyJTIwYm9va3xlbnwwfHwwfHx8MA%3D%3D"
