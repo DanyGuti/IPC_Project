@@ -11,11 +11,13 @@ import {
   cardPropsIngSoftware,
   cardPropsComputadores,
   cardPropsAboutUs,
+  absolutePath,
 } from "../../utils/constants.js";
 
 import {
   loadOutCardLayoutTfgs,
   loadOutCardsAboutUs,
+  loadOutCardTfgsDesktop,
 } from "../../client/components/cards.js";
 
 import {
@@ -24,14 +26,18 @@ import {
   observeChangesForm,
 } from "../scripts/form.js";
 
+import {
+  onFocusSearchBar,
+  formSearchBarEvents,
+} from "../../client/components/navbar/searchbar.js";
 /**
  * Load the passed html componnet
  * @param {String} componentName the name of the HTML component
  * @param {String} containerId the container to insert the HTML component
  */
-export function loadComponent(componentName, containerId) {
+export const loadComponent = (componentName, containerId) => {
   return new Promise((resolve, reject) => {
-    fetch(`./client/components/${componentName}.html`)
+    fetch(`${absolutePath}/client/components/${componentName}.html`)
       .then((response) => response.text())
       .then((html) => {
         const container = document.getElementById(containerId);
@@ -49,20 +55,20 @@ export function loadComponent(componentName, containerId) {
         reject(error);
       });
   });
-}
+};
 
-export function getWidthWindow() {
+export const getWidthWindow = () => {
   return window.innerWidth;
-}
+};
 
 /**
  * Set the navigation nav bar menu
  */
-export function setNavbarMenu() {
+export const setNavbarMenu = () => {
   const width = getWidthWindow();
   // phone
   if (width < 768) {
-    fetch("./client/components/navbar/burger-menu.html")
+    fetch(`${absolutePath}/client/components/navbar/burger-menu.html`)
       .then((response) => response.text())
       .then((html) => {
         document.getElementById("navbar-container").innerHTML = html;
@@ -76,7 +82,7 @@ export function setNavbarMenu() {
       });
   } else {
     // desktop
-    fetch("./client/components/navbar/navbar-menu.html")
+    fetch(`${absolutePath}/client/components/navbar/navbar-menu.html`)
       .then((response) => response.text())
       .then((html) => {
         document.getElementById("navbar-container").innerHTML = html;
@@ -87,15 +93,17 @@ export function setNavbarMenu() {
           });
         closeDropdownNavBar();
         setNavbarActives();
+        onFocusSearchBar();
+        formSearchBarEvents();
       });
   }
-}
+};
 
-window.addEventListener("load", function () {
+window.addEventListener("load", () => {
   setNavbarActives();
 });
 
-window.addEventListener("resize", function () {
+window.addEventListener("resize", () => {
   setNavbarMenu();
 });
 
@@ -103,6 +111,29 @@ window.addEventListener("resize", function () {
  * Render TFGS card components in DOM
  */
 export const loadTFGSComponents = async () => {
+  const mainContent = document.getElementById("content-container");
+  const titleContainer = document.createElement("div");
+  titleContainer.style.display = "flex";
+  titleContainer.style.flexDirection = "row";
+  titleContainer.style.width = "100%";
+  titleContainer.style.justifyContent = "start";
+  titleContainer.style.alignItems = "start";
+  titleContainer.style.marginTop = "2%";
+  titleContainer.style.marginBottom = "5%";
+  const title = document.createElement("h2");
+  title.textContent = "Mejores Memorias Ciclo: 2023-2024";
+  title.style.fontWeight = "600";
+  titleContainer.appendChild(title);
+
+  const divider1 = document.createElement("div");
+  divider1.style.display = "flex";
+  divider1.style.flexDirection = "row";
+  divider1.style.width = "95%";
+  divider1.style.marginBottom = "3%";
+  divider1.style.backgroundColor = "black";
+  divider1.style.height = "1px";
+  mainContent.appendChild(titleContainer);
+  mainContent.appendChild(divider1);
   await loadOutCardLayoutTfgs(
     0,
     "Memorias de TFG's de Computación",
@@ -114,6 +145,46 @@ export const loadTFGSComponents = async () => {
     cardPropsIngSoftware
   );
   await loadOutCardLayoutTfgs(
+    2,
+    "Memorias de TFGs ingeniería de computadores",
+    cardPropsComputadores
+  );
+};
+export const loadOutCardLayoutTfgsDesktop = async () => {
+  const mainContent = document.getElementById("content-container");
+  const titleContainer = document.createElement("div");
+  titleContainer.style.display = "flex";
+  titleContainer.style.flexDirection = "row";
+  titleContainer.style.width = "100%";
+  titleContainer.style.justifyContent = "start";
+  titleContainer.style.alignItems = "start";
+  titleContainer.style.marginTop = "2%";
+  titleContainer.style.marginBottom = "5%";
+  const title = document.createElement("h1");
+  title.textContent = "Mejores Memorias Ciclo: 2023-2024";
+  title.style.fontWeight = "600";
+  titleContainer.appendChild(title);
+
+  const divider1 = document.createElement("div");
+  divider1.style.display = "flex";
+  divider1.style.flexDirection = "row";
+  divider1.style.width = "95%";
+  divider1.style.marginBottom = "3%";
+  divider1.style.backgroundColor = "black";
+  divider1.style.height = "1px";
+  mainContent.appendChild(titleContainer);
+  mainContent.appendChild(divider1);
+  await loadOutCardTfgsDesktop(
+    0,
+    "Memorias de TFG's de Computación",
+    cardPropsComputacion
+  );
+  await loadOutCardTfgsDesktop(
+    1,
+    "Memorias de TFGs ingeniería del software",
+    cardPropsIngSoftware
+  );
+  await loadOutCardTfgsDesktop(
     2,
     "Memorias de TFGs ingeniería de computadores",
     cardPropsComputadores
@@ -132,9 +203,34 @@ export const loadAboutUsComponents = async () => {
  */
 export const loadForm = async () => {
   await loadComponent("form", "content-container");
+  // await loadComponent("progress_bar", "form-eval");
   constructFormLayoutPhone();
   formValidation();
   await observeChangesForm();
+};
+
+export const loadCalendars = async () => {
+  await loadComponent("calendarios_phone", "content-container");
+};
+
+export const setFooter = () => {
+  fetch(`${absolutePath}/client/components/footer/footer.html`)
+    .then((response) => response.text())
+    .then((html) => {
+      document.getElementById("footer-container").innerHTML = html;
+    });
+};
+
+export const loadCalendars = async () => {
+  await loadComponent("calendarios_phone", "content-container");
+};
+
+export const setFooter = () => {
+  fetch(`${absolutePath}/client/components/footer/footer.html`)
+    .then((response) => response.text())
+    .then((html) => {
+      document.getElementById("footer-container").innerHTML = html;
+    });
 };
 
 

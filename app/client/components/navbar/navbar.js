@@ -1,7 +1,9 @@
 import {
   loadTFGSComponents,
   loadAboutUsComponents,
+  loadOutCardLayoutTfgsDesktop,
   loadForm,
+  loadCalendars,
   loadHomeComponents,
   loadCalendarComponents
 } from "../../scripts/main.js";
@@ -103,15 +105,53 @@ export async function setNavbarActives() {
       "nav-a-tfgs-phone",
       "nav-a-eval-phone",
     ];
+    const navLinksDropdown = [
+      "auto-eval-a-nav",
+      "tfgs-a-nav",
+      "requisitos-a-nav",
+    ];
+    if (
+      (getWidthWindow() > 768 && activeLinkId === "nav-a-eval") ||
+      activeLinkId === "nav-a-tfgs" ||
+      activeLinkId === "nav-a-req"
+    ) {
+      const mappingDesktop = {
+        "nav-a-eval": "auto-eval-a-nav",
+        "nav-a-tfgs": "tfgs-a-nav",
+        "nav-a-req": "requisitos-a-nav",
+      };
+      const parentAnchor = document.getElementById("a-toggler-dropdown");
+      if (parentAnchor) {
+        parentAnchor.style.textDecoration = "underline";
+      }
+      navLinksDropdown.forEach((link) => {
+        const anchor = document.getElementById(link);
+        if (anchor) {
+          if (link === mappingDesktop[activeLinkId]) {
+            if (link === "tfgs-a-nav") {
+              loadPageContent("");
+            }
+            anchor.classList.add("active");
+          } else {
+            anchor.classList.remove("active");
+          }
+        }
+      });
+    }
     navLinksA.forEach((link) => {
       const anchor = document.getElementById(link);
       if (anchor) {
         if (link === activeLinkId) {
+          if (link === "nav-a-tfgs-phone") {
+            loadPageContent("");
+          }
           anchor.classList.add("active");
           anchor.style.textDecoration = "underline";
+          anchor.style.opacity = "1";
         } else {
           anchor.classList.remove("active");
           anchor.style.textDecoration = "none";
+          anchor.style.opacity = "0.5";
         }
       }
     });
@@ -122,18 +162,18 @@ export async function setNavbarActives() {
   };
 
   const pageToActiveLinkDesktop = {
-    "/app/about_us.html": "nav-a-about",
-    "/app/calendarios.html": "nav-a-cal",
-    "/app/home.html": "nav-a-home",
+    "/IPC_Project/app/about_us.html": "nav-a-about",
+    "/IPC_Project/app/calendarios.html": "nav-a-cal",
+    "/IPC_Project/app/home.html": "nav-a-home",
   };
 
   const pageToActiveLinkPhone = {
-    "/app/about_us.html": "nav-a-about-phone",
-    "/app/calendarios.html": "nav-a-cal-phone",
-    "/app/home.html": "nav-a-home-phone",
-    "/app/tfgs_anteriores.html": "nav-a-tfgs-phone",
-    "/app/autoevaluacion.html": "nav-a-eval-phone",
-    "/app/requisitos_norm.html": "nav-a-req-phone",
+    "/IPC_Project/app/about_us.html": "nav-a-about-phone",
+    "/IPC_Project/app/calendarios.html": "nav-a-cal-phone",
+    "/IPC_Project/app/home.html": "nav-a-home-phone",
+    "/IPC_Project/app/tfgs_anteriores.html": "nav-a-tfgs-phone",
+    "/IPC_Project/app/autoevaluacion.html": "nav-a-eval-phone",
+    "/IPC_Project/app/requisitos_norm.html": "nav-a-req-phone",
   };
   /**
    * Set the inactive state of the navbar
@@ -164,10 +204,38 @@ export async function setNavbarActives() {
   const startingActive = document.querySelector(".nav-item.active");
   if (startingActive) {
     startingActive.querySelector("a").style.textDecoration = "underline";
+    startingActive.querySelector("a").style.opacity = "1";
   }
   const currentPath = window.location.pathname;
   let selectedLinkDesktop = pageToActiveLinkDesktop[currentPath];
   let selectedLinkPhone = pageToActiveLinkPhone[currentPath];
+  if (!selectedLinkDesktop && selectedLinkPhone && getWidthWindow() > 768) {
+    let selectedLinkDesktopNotNull = pageToActiveLinkPhone[currentPath];
+    switch (selectedLinkDesktopNotNull) {
+      case "nav-a-about-phone":
+        selectedLinkDesktopNotNull = "nav-a-about";
+        break;
+      case "nav-a-cal-phone":
+        selectedLinkDesktopNotNull = "nav-a-cal";
+        break;
+      case "nav-a-home-phone":
+        selectedLinkDesktopNotNull = "nav-a-home";
+        break;
+      case "nav-a-tfgs-phone":
+        selectedLinkDesktopNotNull = "nav-a-tfgs";
+        break;
+      case "nav-a-eval-phone":
+        selectedLinkDesktopNotNull = "nav-a-eval";
+        break;
+      case "nav-a-req-phone":
+        selectedLinkDesktopNotNull = "nav-a-req";
+        break;
+      default:
+        selectedLinkDesktopNotNull = "nav-a-home";
+        break;
+    }
+    pageToActiveLinkDesktop[currentPath] = selectedLinkDesktopNotNull;
+  }
   if (pageToActiveLinkDesktop[currentPath]) {
     setInitialStateActive(pageToActiveLinkDesktop[currentPath]);
   }
@@ -178,7 +246,6 @@ export async function setNavbarActives() {
   if (navLinks.length === 0) {
     loadPageContent("");
   }
-
   let dropdownLinks = getDropdownLinks(navLinks);
   let hasClickedDropdown = false;
   const anchorActives = [
@@ -199,9 +266,15 @@ export async function setNavbarActives() {
       });
       if (currentActive && !hasClickedDropdown) {
         currentActive.classList.remove("active");
-        currentActive.querySelector("a").style.textDecoration = "none";
+        if (currentActive.querySelector("a")) {
+          currentActive.querySelector("a").style.textDecoration = "none";
+          currentActive.querySelector("a").style.opacity = "0.5";
+        }
       }
       link.classList.add("active");
+      // get parent node and add style
+      const parentAnchor = document.getElementById("a-toggler-dropdown");
+      parentAnchor.style.textDecoration = "underline";
       const href = link.getAttribute("href");
       window.history.pushState({ path: href }, "", href);
       hasClickedDropdown = true;
@@ -218,19 +291,33 @@ export async function setNavbarActives() {
         document.getElementById(selectedLinkDesktop) || null;
       if (underlinedPhone) {
         underlinedPhone.style.textDecoration = "none";
+        underlinedPhone.style.opacity = "0.5";
       }
       if (underlinedDesktop) {
         underlinedDesktop.style.textDecoration = "none";
+        underlinedDesktop.style.opacity = "0.5";
       }
       if (currentActive && !hasClickedDropdown) {
         currentActive.classList.remove("active");
-        currentActive.querySelector("a").style.textDecoration = "none";
+        if (currentActive.querySelector("a")) {
+          currentActive.querySelector("a").style.textDecoration = "none";
+          currentActive.querySelector("a").style.opacity = "0.5";
+        }
+        if (getWidthWindow() > 768) {
+          const parentAnchor = document.getElementById("a-toggler-dropdown");
+          parentAnchor.style.textDecoration = "none";
+        }
       }
       if (link.classList.contains("dropdown-item")) {
         return;
       }
       link.classList.add("active");
       link.querySelector("a").style.textDecoration = "underline";
+      link.querySelector("a").style.opacity = "1";
+      if (getWidthWindow() > 768) {
+        const parentAnchor = document.getElementById("a-toggler-dropdown");
+        parentAnchor.style.textDecoration = "none";
+      }
       const href = link.querySelector("a").getAttribute("href");
       window.history.pushState({ path: href }, "", href);
       if (getWidthWindow() > 768) {
@@ -269,33 +356,48 @@ function loadPageContent(href) {
 
         contentContainer.innerHTML = tempDiv.innerHTML;
         const getCurrentPage = window.location.pathname;
-        if (getCurrentPage === "/app/tfgs_anteriores.html") {
-          loadTFGSComponents();
+        if (getCurrentPage === "/IPC_Project/app/tfgs_anteriores.html") {
+          if (getWidthWindow() < 768) {
+            const card = document.getElementById("row-cards-0");
+            if (!card || card.childElementCount === 0) {
+              loadTFGSComponents();
+            }
+          } else {
+            const card = document.getElementById("row-cards-0");
+            if (!card || card.childElementCount === 0) {
+              loadOutCardLayoutTfgsDesktop();
+            }
+          }
           loadHeaderBackGroundImage(
             "https://images.unsplash.com/photo-1488998427799-e3362cec87c3?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNvbXB1dGVyJTIwYm9va3xlbnwwfHwwfHx8MA%3D%3D"
           );
-        } else if (getCurrentPage === "/app/about_us.html") {
+        } else if (getCurrentPage === "/IPC_Project/app/about_us.html") {
           loadAboutUsComponents();
           loadHeaderBackGroundImage(
             "https://images.unsplash.com/photo-1488998427799-e3362cec87c3?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNvbXB1dGVyJTIwYm9va3xlbnwwfHwwfHx8MA%3D%3D"
           );
-        } else if (getCurrentPage === "/app/autoevaluacion.html") {
+        } else if (getCurrentPage === "/IPC_Project/app/autoevaluacion.html") {
           loadForm();
           loadHeaderBackGroundImage(
             "https://images.unsplash.com/photo-1488998427799-e3362cec87c3?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNvbXB1dGVyJTIwYm9va3xlbnwwfHwwfHx8MA%3D%3D"
           );
-        }  else if (getCurrentPage === "/app/home.html") {
-          loadHomeComponents();
-        } else if (getCurrentPage === "/app/calendarios.html") {
-            loadCalendarComponents();
-
-
-        }
-        else {
+        } else if (getCurrentPage === "/IPC_Project/app/calendarios.html") {
+          loadCalendars();
           loadHeaderBackGroundImage(
             "https://images.unsplash.com/photo-1488998427799-e3362cec87c3?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNvbXB1dGVyJTIwYm9va3xlbnwwfHwwfHx8MA%3D%3D"
           );
-          console.log("Setting header");
+          // Apply all the styles to the calendars:
+          const calendarContainer = document.getElementById("phone-calendars");
+          if (calendarContainer) {
+            const tables = calendarContainer.getElementsByTagName("table");
+            for (const table of tables) {
+              table.classList.add("table");
+            }
+          }
+        } else {
+          loadHeaderBackGroundImage(
+            "https://images.unsplash.com/photo-1488998427799-e3362cec87c3?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNvbXB1dGVyJTIwYm9va3xlbnwwfHwwfHx8MA%3D%3D"
+          );
         }
         setHeader();
         resolve(contentContainer);
@@ -333,29 +435,31 @@ function setHeader() {
   const getCurrentPage = window.location.pathname;
   const header = document.getElementById("header-container");
   header.innerHTML = "";
+  header.style.textAlign = "center";
+  header.style.marginTop = "5%";
   switch (getCurrentPage) {
-    case "/app/home.html":
+    case "/IPC_Project/app/home.html":
       header.innerHTML = "<h1>Welcome to Home Page</h1>";
       break;
-    case "/app/calendarios.html":
+    case "/IPC_Project/app/calendarios.html":
       header.innerHTML = "<h1>Calendarios</h1>";
       break;
-    case "/app/about_us.html":
+    case "/IPC_Project/app/about_us.html":
       header.innerHTML = "<h1>About Us</h1>";
       break;
-    case "/app/tfgs_anteriores.html":
+    case "/IPC_Project/app/tfgs_anteriores.html":
       header.innerHTML = "<h1>TFG's anteriores</h1>";
       break;
-    case "/app/autoevaluacion.html":
+    case "/IPC_Project/app/autoevaluacion.html":
       header.innerHTML = "<h1>Cuestionario</h1>";
       break;
-    case "/app/":
+    case "/IPC_Project/app/":
       header.innerHTML = "<h1>Inicio</h1>";
       break;
-    case "/app/index.html":
+    case "/IPC_Project/app/index.html":
       header.innerHTML = "<h1>Inicio</h1>";
       break;
-    case "/app/requisitos_norm.html":
+    case "/IPC_Project/app/requisitos_norm.html":
       header.innerHTML = "<h1>Requisitos y normativas</h1>";
       break;
     default:
@@ -377,7 +481,8 @@ const loadHeaderBackGroundImage = (imageHeader) => {
   backGroundImage.id = "backGroundImage-navbar";
   backGroundImage.src = imageHeader;
   backGroundImage.style.width = "100%";
-  backGroundImage.style.height = "100%";
+  backGroundImage.style.height = getWidthWindow() < 768 ? "100%" : "450px";
   backGroundImage.style.zIndex = "-10";
+  backGroundImage.style.objectFit = "cover";
   navBar.appendChild(backGroundImage);
 };

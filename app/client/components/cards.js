@@ -13,6 +13,7 @@ export async function loadOutCardLayoutTfgs(
 ) {
   setTimeout(async () => {
     const mainContent = document.getElementById("content-container");
+    mainContent.style.marginTop = "5%";
     const headerContainer = document.getElementById("header-container");
     const columnsPerRow = 2;
     headerContainer.zIndex = "100";
@@ -36,21 +37,22 @@ export async function loadOutCardLayoutTfgs(
     divider.style.width = "100%";
     paragraph.textContent = rowLayoutTitle;
     paragraph.style.fontSize = "1.5rem";
-    paragraph.style.fontWeight = "medium";
+    paragraph.style.fontWeight = "500";
 
     const wrapper = document.createElement("div");
+    wrapper.id = "wrapper-cards";
     wrapper.style.display = "flex";
     wrapper.style.flexDirection = "column";
     wrapper.style.justifyContent = "start";
     wrapper.style.alignItems = "center";
     wrapper.style.width = "100%";
-    wrapper.style.height = "60%";
+    wrapper.style.height = "40%";
     wrapper.appendChild(rowContainer);
     divider.appendChild(paragraph);
     mainContent.appendChild(divider);
 
     rowContainer.style.width = "100%";
-    rowContainer.style.height = "45%";
+    rowContainer.style.height = "10%";
 
     mainContent.appendChild(wrapper);
 
@@ -64,6 +66,7 @@ export async function loadOutCardLayoutTfgs(
       const cardBody = card.querySelector("#props-card-body");
       cardImage.src = cardData.imageSrc;
       cardBody.querySelector(".card-title").textContent = cardData.title;
+      cardBody.querySelector(".card-title").style.fontWeight = "bold";
       cardBody.querySelector(".card-text").textContent = cardData.text;
       const linkElement = cardBody.querySelector(".text-muted");
       linkElement.innerHTML = `<a href="${cardData.linkUrl}" target="_blank">Ver memoria</a>`;
@@ -88,12 +91,14 @@ export async function loadOutCardLayoutTfgs(
     const cardBody = card.querySelector("#props-card-body");
     cardImage.src = cardData.imageSrc;
     cardBody.querySelector(".card-title").textContent = cardData.title;
+    cardBody.querySelector(".card-title").style.fontWeight = "bold";
     cardBody.querySelector(".card-text").textContent = cardData.text;
     const linkElement = cardBody.querySelector(".text-muted");
     linkElement.innerHTML = `<a href="${cardData.linkUrl}" target="_blank">Ver memoria</a>`;
 
     thirdCardRowContainer.appendChild(card);
-  }, 100);
+    thirdCardRowContainer.style.marginBottom = "5%";
+  }, 1);
 }
 
 /**
@@ -113,9 +118,9 @@ export async function loadOutCardsAboutUs(cardProps) {
     const objectiveDivider = document.createElement("div");
 
     // Create the ¿Quiénes somos? title
-    const objectiveParagraph = document.createElement("h4");
+    const objectiveParagraph = document.createElement("h1");
     objectiveParagraph.textContent = "Objetivos";
-    objectiveDivider.style.marginTop = "5%";
+    objectiveDivider.style.marginTop = "2%";
     const descriptionObjective = document.createElement("p");
     const descriptionObjective2 = document.createElement("p");
     descriptionObjective.textContent =
@@ -163,12 +168,11 @@ export async function loadOutCardsAboutUs(cardProps) {
     mainContent.appendChild(bibliographies);
 
     const divider = document.createElement("div");
-    const paragraph = document.createElement("h2");
+    const paragraph = document.createElement("h1");
     divider.style.display = "flex";
     divider.style.flexDirection = "row";
     divider.style.width = "100%";
     paragraph.textContent = "¿Quiénes somos?";
-    paragraph.style.fontSize = "1.5rem";
 
     divider.appendChild(paragraph);
     mainContent.appendChild(divider);
@@ -179,7 +183,7 @@ export async function loadOutCardsAboutUs(cardProps) {
     rowContainer.style.flexDirection = "row";
     rowContainer.style.justifyContent = "flex-start";
     rowContainer.style.gap = "5%";
-    rowContainer.style.marginTop = "5%";
+    rowContainer.style.marginTop = "2%";
     rowContainer.style.marginBottom = "5%";
     rowContainer.style.width = "100%";
     rowContainer.style.height = "32%";
@@ -195,6 +199,8 @@ export async function loadOutCardsAboutUs(cardProps) {
       const cardBody = card.querySelector("#props-card-body");
       cardImage.src = cardData.imageSrc;
       cardBody.querySelector(".card-text").textContent = cardData.name;
+      cardBody.querySelector(".card-text").style.fontWeight = "500";
+      cardBody.querySelector(".card-text").style.fontSize = "1.5rem";
     }
     idRowLayout++;
     const rowContainer2 = document.createElement("div");
@@ -217,6 +223,193 @@ export async function loadOutCardsAboutUs(cardProps) {
       const cardBody = card.querySelector("#props-card-body");
       cardImage.src = cardData.imageSrc;
       cardBody.querySelector(".card-text").textContent = cardData.name;
+      cardBody.querySelector(".card-text").style.fontWeight = "500";
+      cardBody.querySelector(".card-text").style.fontSize = "1.5rem";
     }
   }, 100);
+}
+
+/**
+ * Load the card component with the given id into the container with the given id
+ * @param {int} idRowLayout - The id of the component to load
+ * @param {string} rowLayoutTitle - The string of the container
+ * @param {[object]} cardProps - The properties of the card
+ */
+export async function loadOutCardTfgsDesktop(
+  idRowLayout,
+  rowLayoutTitle,
+  cardProps
+) {
+  setTimeout(async () => {
+    const wrapperContainer = document.getElementById("wrapper-cards");
+    if (wrapperContainer) {
+      return;
+    }
+    const mainContent = document.getElementById("content-container");
+    mainContent.style.marginTop = "5%";
+    const headerContainer = document.getElementById("header-container");
+    const columnsPerRow = 2;
+    headerContainer.zIndex = "100";
+    headerContainer.style.position = "absolute";
+    mainContent.style.position = "relative";
+    mainContent.style.flexDirection = "column";
+
+    const rowContainer = document.createElement("div");
+    rowContainer.id = `row-cards-${idRowLayout}`;
+    rowContainer.style.display = "flex";
+    rowContainer.style.flexDirection = "row";
+    rowContainer.style.justifyContent = "flex-start";
+    rowContainer.style.gap = "5%";
+    rowContainer.style.marginTop = "5%";
+    rowContainer.style.marginBottom = "10%";
+
+    const divider = document.createElement("div");
+    const paragraph = document.createElement("p");
+    divider.style.display = "flex";
+    divider.style.flexDirection = "row";
+    divider.style.width = "100%";
+    paragraph.textContent = rowLayoutTitle;
+    paragraph.style.fontSize = "2.3rem";
+    paragraph.style.fontWeight = "500";
+
+    const wrapper = document.createElement("div");
+    wrapper.id = "wrapper-cards-desktop";
+    wrapper.style.display = "flex";
+    wrapper.style.flexDirection = "column";
+    wrapper.style.justifyContent = "start";
+    wrapper.style.alignItems = "center";
+    wrapper.style.width = "100%";
+    wrapper.style.height = "40%";
+    wrapper.appendChild(rowContainer);
+    divider.appendChild(paragraph);
+    mainContent.appendChild(divider);
+
+    rowContainer.style.width = "100%";
+    rowContainer.style.height = "10%";
+
+    mainContent.appendChild(wrapper);
+
+    for (let i = 0; i < columnsPerRow; i++) {
+      await loadComponent("tfgs_card_desktop", `row-cards-${idRowLayout}`);
+      const card = document.getElementById("card-tfg-desktop");
+      card.id = `card-tfg-desktop-${i}`;
+      // Add the cards to the row
+      const cardData = cardProps[i];
+      const cardBody = card.querySelector("#props-card-body");
+      cardBody.querySelector(".card-title").textContent = cardData.title;
+      cardBody.querySelector(".card-title").style.fontWeight = "bold";
+      cardBody.querySelector(".card-text").textContent = cardData.text;
+      const buttonFRow = document.createElement("button");
+      buttonFRow.id = `button-show-more-${i}`;
+      buttonFRow.style.padding = "2%";
+      buttonFRow.type = "button";
+      buttonFRow.style.width = "35%";
+      buttonFRow.style.height = "22%";
+      buttonFRow.className = "btn btn-primary";
+      buttonFRow.textContent = "Ver PDF memoria";
+      buttonFRow.style.opacity = "0.89";
+      // align button to the center
+      buttonFRow.style.margin = "auto";
+      buttonFRow.style.marginBottom = "2%";
+      buttonFRow.addEventListener("click", () => {
+        const iframe = document.createElement("iframe");
+        iframe.src = cardData.linkUrl;
+        iframe.style.width = "100%";
+        iframe.style.height = "100%";
+        if (iframe) card.appendChild(iframe);
+        buttonFRow.style.display = "none";
+        card.style.height = "500px";
+        card.style.transition = "height 0.5s";
+        cardBody.querySelector(".card-text").style.display = "none";
+        const buttonHidePdf = document.createElement("button");
+        buttonHidePdf.id = `button-hide-pdf-${i}`;
+        buttonHidePdf.type = "button";
+        buttonHidePdf.style.width = "25%";
+        buttonHidePdf.style.height = "8%";
+        buttonHidePdf.className = "btn btn-primary";
+        buttonHidePdf.textContent = "Ocultar PDF";
+        buttonHidePdf.style.opacity = "0.89";
+        // align button to the center
+        buttonHidePdf.style.margin = "auto";
+        buttonHidePdf.style.marginBottom = "2%";
+        buttonHidePdf.addEventListener("click", () => {
+          iframe.style.display = "none";
+          buttonFRow.style.display = "block";
+          card.style.height = "200px";
+          cardBody.querySelector(".card-text").style.display = "block";
+          buttonHidePdf.style.display = "none";
+        });
+        card.appendChild(buttonHidePdf);
+        card.appendChild(iframe);
+      });
+      card.appendChild(buttonFRow);
+      rowContainer.appendChild(card);
+    }
+    const thirdCardRowContainer = document.createElement("div");
+    thirdCardRowContainer.id = `row-cards-${idRowLayout}-2`;
+    thirdCardRowContainer.style.display = "flex";
+    thirdCardRowContainer.style.flexDirection = "row";
+    thirdCardRowContainer.alignItems = "center";
+    thirdCardRowContainer.style.width = "100%";
+    thirdCardRowContainer.style.height = "35%";
+    thirdCardRowContainer.style.justifyContent = "center";
+    wrapper.appendChild(thirdCardRowContainer);
+
+    // Add the third card below the first two in the middle
+    await loadComponent("tfgs_card_desktop", `row-cards-${idRowLayout}`);
+    const card = document.getElementById("card-tfg-desktop");
+    card.id = `card-tfg-desktop-${idRowLayout}-2`;
+    const cardData = cardProps[2];
+    const cardBody = card.querySelector("#props-card-body");
+    cardBody.querySelector(".card-title").textContent = cardData.title;
+    cardBody.querySelector(".card-title").style.fontWeight = "bold";
+    cardBody.querySelector(".card-text").textContent = cardData.text;
+    const buttonSRow = document.createElement("button");
+    buttonSRow.id = `button-show-more-2`;
+    buttonSRow.style.padding = "2%";
+    buttonSRow.type = "button";
+    buttonSRow.style.width = "35%";
+    buttonSRow.className = "btn btn-primary";
+    buttonSRow.textContent = "Ver PDF memoria";
+    buttonSRow.style.height = "22%";
+    buttonSRow.style.opacity = "0.89";
+    // align button to the center
+    buttonSRow.style.margin = "auto";
+    buttonSRow.style.marginBottom = "2%";
+    buttonSRow.addEventListener("click", () => {
+      const iframe = document.createElement("iframe");
+      iframe.src = cardData.linkUrl;
+      iframe.style.width = "100%";
+      iframe.style.height = "100%";
+      buttonSRow.style.display = "none";
+      // Expand the card
+      card.style.height = "500px";
+      card.style.transition = "height 0.5s";
+      cardBody.querySelector(".card-text").style.display = "none";
+      const buttonHidePdf = document.createElement("button");
+      buttonHidePdf.id = `button-hide-pdf-2`;
+      buttonHidePdf.type = "button";
+      buttonHidePdf.style.width = "25%";
+      buttonHidePdf.style.height = "8%";
+      buttonHidePdf.className = "btn btn-primary";
+      buttonHidePdf.textContent = "Ocultar PDF";
+      buttonHidePdf.style.opacity = "0.89";
+      // align button to the center
+      buttonHidePdf.style.margin = "auto";
+      buttonHidePdf.style.marginBottom = "2%";
+      buttonHidePdf.addEventListener("click", () => {
+        iframe.style.display = "none";
+        buttonSRow.style.display = "block";
+        card.style.height = "200px";
+        cardBody.querySelector(".card-text").style.display = "block";
+        buttonHidePdf.style.display = "none";
+      });
+      card.appendChild(buttonHidePdf);
+      card.appendChild(iframe);
+    });
+    card.appendChild(buttonSRow);
+
+    thirdCardRowContainer.appendChild(card);
+    thirdCardRowContainer.style.marginBottom = "5%";
+  }, 1);
 }

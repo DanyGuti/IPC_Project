@@ -22,12 +22,41 @@ export const formValidation = () => {
             event.stopPropagation();
           }
           event.preventDefault();
+          // Clear previous validation messages
+          const allValidationDivs = document.querySelectorAll(
+            ".validation-message"
+          );
+          allValidationDivs.forEach((div) => div.remove());
           const getAllInputs = document.querySelectorAll(".form-check-input");
           let jIndex = 0;
-          getAllInputs.forEach(async (input, index) => {
+          let shownCorrectForQuestion = {};
+          getAllInputs.forEach((input, index) => {
+            const parentDiv =
+              input.closest(".form-group") || input.parentElement;
+
+            const questionIndex = Math.floor(index / 4);
+            if (!shownCorrectForQuestion[questionIndex]) {
+              shownCorrectForQuestion[questionIndex] = false;
+            }
+            if (shownCorrectForQuestion[questionIndex]) return;
             if (index % 4 === 0 && index != 0) jIndex++;
             if (input.checked && correctResponses[jIndex] === index % 4) {
               validResponses++;
+              const correctInput = getAllInputs[jIndex * 4 + (index % 4)];
+              correctInput.style.border = "2px solid green";
+              addValidationMessage(parentDiv, "¡Has acertado!", "valid");
+              shownCorrectForQuestion[questionIndex] = true;
+            }
+            if (input.checked && correctResponses[jIndex] !== index % 4) {
+              const correctInput =
+                getAllInputs[jIndex * 4 + correctResponses[jIndex]];
+              correctInput.style.border = "2px solid green";
+              input.style.border = "2px solid red";
+              addValidationMessage(
+                parentDiv,
+                "Respuesta incorrecta, intenta de nuevo",
+                "invalid"
+              );
             }
           });
           await loadComponent("modal_auto_eval", "content-container");
@@ -54,31 +83,76 @@ const postFormSubmit = async (validResponses, form) => {
   const bootstrapModal = new bootstrap.Modal(modal);
   bootstrapModal.show();
   // Close the modal
+
+  const buttonShowResults = document.createElement("button");
+  buttonShowResults.textContent = "Respuestas";
+  buttonShowResults.className = "btn btn-info";
+  buttonShowResults.id = "show-results-button";
+
+  buttonShowResults.addEventListener("click", async (event) => {
+    const clickedButton = event.target;
+    console.log(clickedButton);
+    if (clickedButton.id === "show-results-button") {
+      const submitButton = document.getElementById("submit-form-button");
+      submitButton.remove();
+      bootstrapModal.hide();
+      form.classList.add("was-validated");
+      const allInputs = document.querySelectorAll(".form-check-input");
+      allInputs.forEach((input) => {
+        input.disabled = true;
+      });
+      const newButton = document.createElement("button");
+      newButton.textContent = "Volver a intentar";
+      newButton.className = "btn btn-primary";
+      const contForm = document.getElementById("form-eval");
+      newButton.addEventListener("click", async (event) => {
+        bootstrapModal.hide();
+        // Reset the form
+        window.location.reload();
+        newButton.remove();
+      });
+      contForm.appendChild(newButton);
+      return;
+    }
+  });
+
+  // append the button to the modal
+  modalContent.appendChild(buttonShowResults);
   const closeButton = document.getElementById("close-modal-form");
-  closeButton.addEventListener("click", async () => {
+  closeButton.addEventListener("click", async (event) => {
+    console.log("close button", event.target);
     bootstrapModal.hide();
     // Reset the form
     validResponses = 0;
     await resetStateForm(form);
+    const inputs = document.querySelectorAll(".form-check-input");
+    inputs.forEach((input) => {
+      input.style.border = "1px solid #ced4da";
+    });
+    // get all class name divs validations and remove them
+    const allValidationDivs = document.querySelectorAll(".validation-feedback");
+    allValidationDivs.forEach((div) => div.remove());
+
     const documentButton = document.getElementById("submit-form-button");
-    documentButton.disabled = true;
+    if (documentButton) documentButton.disabled = true;
   });
   modal.addEventListener("hidden.bs.modal", async () => {
     // Reset the form
     validResponses = 0;
     await resetStateForm(form);
     const documentButton = document.getElementById("submit-form-button");
-    documentButton.disabled = true;
+    if (documentButton) documentButton.disabled = true;
   });
   const goHomeButton = document.getElementById("home-modal-form");
-  goHomeButton.addEventListener("click", async () => {
+  goHomeButton.addEventListener("click", async (event) => {
     bootstrapModal.hide();
+    console.log("home button", event.target);
     // Reset the form
     validResponses = 0;
     await resetStateForm(form);
     const documentButton = document.getElementById("submit-form-button");
-    documentButton.disabled = true;
-    window.location.href = "/app/home.html";
+    if (documentButton) documentButton.disabled = true;
+    window.location.href = "/IPC_Project/app/home.html";
   });
 };
 
@@ -87,13 +161,25 @@ const postFormSubmit = async (validResponses, form) => {
  */
 export const constructFormLayoutPhone = () => {
   const containerInnerDiv = document.getElementById("question-container-form");
+  const descriptionForm = document.createElement("h3");
+  descriptionForm.textContent =
+    "Contesta las siguientes preguntas para autoevaluar tus conocimientos, no podrás ver los resultados hasta que hayas contestado todas las preguntas.";
+  descriptionForm.style.fontWeight = "300";
+  descriptionForm.style.marginBottom = "5%";
+  descriptionForm.style.marginTop = "5%";
+  descriptionForm.style.width = "90%";
+  containerInnerDiv.appendChild(descriptionForm);
   questionsAutoEval.forEach((question, index) => {
-    // Create a p
     const paragraph = document.createElement("p");
-    paragraph.style.fontWeight = "bold";
+    paragraph.style.fontWeight = "660";
     paragraph.textContent = `Pregunta ${index + 1}: ${question.question}`;
     paragraph.id = `question-form-${index}`;
     paragraph.style.width = "95%";
+    paragraph.style.fontSize = "1.4rem";
+    const asterisk = document.createElement("span");
+    asterisk.textContent = " *";
+    asterisk.style.color = "red";
+    paragraph.appendChild(asterisk);
     // Creata a div struct for each of the answers
     containerInnerDiv.appendChild(paragraph);
     question.answers.forEach((answer, indexAns) => {
@@ -113,6 +199,7 @@ export const constructFormLayoutPhone = () => {
       input.name = `input-form-${index}`;
       input.style.width = "20px";
       input.style.height = "20px";
+      input.style.fontSize = "1.3rem";
       input.className = "form-check-input";
       input.required = true;
 
@@ -120,6 +207,7 @@ export const constructFormLayoutPhone = () => {
       const label = document.createElement("label");
       label.textContent = answer;
       label.className = "form-check-label";
+      label.style.fontSize = "1.1rem";
       label.htmlFor = `input-form-${index}-answer-${indexAns}`;
 
       // Append the input and label to the div
@@ -143,12 +231,18 @@ export const constructFormLayoutPhone = () => {
 
 const resetStateForm = async (form) => {
   const formInputs = document.querySelectorAll(".form-check-input");
+  const formProgress = document.getElementById("progress-container");
   formInputs.forEach(async (input) => {
     input.checked = false;
   });
   form.classList.remove("was-validated");
   form.reset();
   await observeChangesForm();
+  if (formProgress) {
+    formProgress.setAttribute("aria-valuenow", 0);
+    formProgress.style.width = "0%";
+    formProgress.textContent = "0%";
+  }
 };
 
 /**
@@ -157,6 +251,7 @@ const resetStateForm = async (form) => {
  */
 export const observeChangesForm = async () => {
   const forms = document.querySelectorAll(".form-check-input");
+  const formProgress = document.getElementById("progress-container");
   let totalQuestionsChecked = 0;
   const documentButton = document.getElementById("submit-form-button");
   let indexesAnswers = Array(forms.length).fill(false);
@@ -175,15 +270,40 @@ export const observeChangesForm = async () => {
       }
       totalQuestionsChecked = indexesAnswers.reduce((acc, curr) => {
         if (curr) {
+          if (formProgress) {
+            formProgress.setAttribute("aria-valuenow", 25 * (acc + 1));
+            formProgress.style.width = `${25 * (acc + 1)}%`;
+            formProgress.textContent = `${25 * (acc + 1)}%`;
+          }
           return acc + 1;
         }
         return acc;
       }, 0);
       if (totalQuestionsChecked === questionsAutoEval.length) {
         documentButton.disabled = false;
+        if (formProgress) {
+          formProgress.setAttribute("aria-valuenow", 100);
+          formProgress.style.width = "100%";
+          formProgress.textContent = "100%";
+        }
       } else {
         documentButton.disabled = true;
       }
     });
   });
+};
+
+/**
+ * Function to add validation message below the input
+ * @param {HTMLElement} parentDiv - The parent container for the input
+ * @param {string} message - The message to display
+ * @param {string} type - The type of message: "valid" or "invalid"
+ */
+const addValidationMessage = (parentDiv, message, type) => {
+  const validationDiv = document.createElement("div");
+  validationDiv.className = `validation-feedback ${type}`;
+  validationDiv.textContent = message;
+  validationDiv.style.color = type === "valid" ? "green" : "red";
+  validationDiv.style.marginTop = "5px";
+  parentDiv.appendChild(validationDiv);
 };
