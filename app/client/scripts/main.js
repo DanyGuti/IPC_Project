@@ -4,6 +4,7 @@ import {
   setNavbarActives,
   toggleDropdown,
   closeDropdownNavBar,
+
 } from "../../client/components/navbar/navbar.js";
 
 import {
@@ -213,31 +214,18 @@ export const loadCalendars = async () => {
   await loadComponent("calendarios_phone", "content-container");
 };
 
-export const setFooter = () => {
-  fetch(`${absolutePath}/client/components/footer/footer.html`)
-    .then((response) => response.text())
-    .then((html) => {
-      document.getElementById("footer-container").innerHTML = html;
-    });
-};
-
-export const loadCalendars = async () => {
-  await loadComponent("calendarios_phone", "content-container");
-};
-
-export const setFooter = () => {
-  fetch(`${absolutePath}/client/components/footer/footer.html`)
-    .then((response) => response.text())
-    .then((html) => {
-      document.getElementById("footer-container").innerHTML = html;
-    });
-};
-
-
 export const loadHomeComponents = async () => {
   await loadComponent("intro", "content-container");
 };
 
-export const loadCalendarComponents = async () => {
-  await loadComponent("calendar", "content-container");
-}
+export const loadReq = async () => {
+  await loadComponent("req_nor", "content-container");
+};
+
+export const setFooter = () => {
+  fetch(`${absolutePath}/client/components/footer/footer.html`)
+    .then((response) => response.text())
+    .then((html) => {
+      document.getElementById("footer-container").innerHTML = html;
+    });
+};
