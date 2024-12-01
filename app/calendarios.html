@@ -18,6 +18,33 @@
       height: 100%;
       margin: 0;
     }
+    #header-container {
+      /* background-image: url('https://www.protocolo.com/wp-content/uploads/Banner-Empleados-Saludables-1.png'); /* URL de ejemplo */ 
+      background-size: cover;
+      background-position: center;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #header-title {
+      color: white;
+      font-size: 3rem;
+      font-weight: bold;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    }
+    h2 {
+      color: #007bff; /* Azul */
+      text-align: center;
+    }
+    .table-section {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+    }
   </style>
 </head>
 
@@ -31,6 +58,7 @@
   <div id="footer-container" class="footer-basic">
   </div>
 </body>
+
 <script type="module">
   import { setNavbarMenu, setFooter } from "./client/scripts/main.js";
   setNavbarMenu();

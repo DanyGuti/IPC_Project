@@ -12,12 +12,20 @@
     crossorigin="anonymous"></script>
   <link rel="stylesheet" href="/IPC_Project/app/client/components/styles/footer.styles.css">
   <style>
-    html,
-    body {
-      height: 100%;
-      margin: 0;
-    }
-  </style>
+  body {
+    font-size: 1rem;
+    min-height: 100vh; /* Asegura que el contenido ocupe al menos toda la altura de la pantalla */
+    display: flex;
+    flex-direction: column;
+  }
+  .container {
+    flex: 1; /* Permite que la sección de contenido ocupe el espacio disponible */
+    padding: 15px;
+  }
+  footer {
+    margin-top: 20px;
+  }
+</style>
 </head>
 
 <body style="height:100%;">

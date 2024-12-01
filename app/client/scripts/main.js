@@ -4,6 +4,7 @@ import {
   setNavbarActives,
   toggleDropdown,
   closeDropdownNavBar,
+
 } from "../../client/components/navbar/navbar.js";
 
 import {
@@ -211,6 +212,14 @@ export const loadForm = async () => {
 
 export const loadCalendars = async () => {
   await loadComponent("calendarios_phone", "content-container");
+};
+
+export const loadHomeComponents = async () => {
+  await loadComponent("intro", "content-container");
+};
+
+export const loadReq = async () => {
+  await loadComponent("req_nor", "content-container");
 };
 
 export const setFooter = () => {
