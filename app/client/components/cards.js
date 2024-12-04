@@ -1,4 +1,4 @@
-import { loadComponent } from "../scripts/main.js";
+import { getWidthWindow, loadComponent } from "../scripts/main.js";
 import { cardPropsBibliographies } from "../../utils/constants.js";
 /**
  * Load the card component with the given id into the container with the given id
@@ -217,6 +217,140 @@ export async function loadOutCardsAboutUs(cardProps) {
     for (let i = 2; i < cardProps.length; i++) {
       await loadComponent("about_us_card", `row-cards-about-${idRowLayout}`);
       const card = document.getElementById("card-about-phone");
+      card.id = `card-about-phone-${i}`;
+      const cardData = cardProps[i];
+      const cardImage = card.querySelector("#card-img");
+      const cardBody = card.querySelector("#props-card-body");
+      cardImage.src = cardData.imageSrc;
+      cardBody.querySelector(".card-text").textContent = cardData.name;
+      cardBody.querySelector(".card-text").style.fontWeight = "500";
+      cardBody.querySelector(".card-text").style.fontSize = "1.5rem";
+    }
+  }, 100);
+}
+
+/**
+ * Load the cards in about us view
+ * @param {[Object]} cardProps
+ */
+export async function loadOutCardsAboutUsDesktop(cardProps) {
+  setTimeout(async () => {
+    const mainContent = document.getElementById("content-container");
+    const headerContainer = document.getElementById("header-container");
+    headerContainer.zIndex = "100";
+    headerContainer.style.position = "absolute";
+    mainContent.style.position = "relative";
+    mainContent.style.flexDirection = "column";
+    let idRowLayout = 0;
+    // Create the Objetivos paragraph
+    const objectiveDivider = document.createElement("div");
+
+    // Create the ¿Quiénes somos? title
+    const objectiveParagraph = document.createElement("h1");
+    objectiveParagraph.textContent = "Objetivos";
+    objectiveDivider.style.marginTop = "2%";
+    const descriptionObjective = document.createElement("p");
+    const descriptionObjective2 = document.createElement("p");
+    descriptionObjective.textContent =
+      "Mostrar de una manera eficiente, transparente y de fácil acceso a los estudiantes/profesores del tercer grado el proceso de realización del Trabajo de Fin de Grado.";
+    // overflow wrap
+    descriptionObjective.style.overflowWrap = "break-word";
+    descriptionObjective2.style.overflowWrap = "break-word";
+    descriptionObjective2.textContent =
+      "Facilitar al estudiantado y a los profesores el calendario con las fechas establecidas por la UPV/EHU.";
+    // Insert the description of the objective
+    objectiveDivider.appendChild(objectiveParagraph);
+    objectiveDivider.appendChild(descriptionObjective);
+    objectiveDivider.appendChild(descriptionObjective2);
+    mainContent.appendChild(objectiveDivider);
+
+    // Inject the bibliographies
+    const bibliographies = document.createElement("div");
+    bibliographies.style.display = "flex";
+    bibliographies.style.flexDirection = "column";
+    bibliographies.style.width = "85%";
+    bibliographies.style.marginTop = "5%";
+    bibliographies.style.justifyContent = "start";
+    bibliographies.style.alignItems = "start";
+
+    const bibliographiesTitle = document.createElement("h2");
+    bibliographiesTitle.textContent = "Fuentes";
+    const ulist = document.createElement("ul");
+    ulist.style.display = "flex";
+    ulist.style.flexDirection = "column";
+    ulist.style.width = "100%";
+    ulist.style.justifyContent = "center";
+    ulist.style.alignItems = "center";
+    // TODO CHANGE THE URLS!!!!
+    // TO THE ONES THAT ARE REAL ONES
+    cardPropsBibliographies.forEach((element) => {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = Object.values(element)[0];
+      a.textContent = Object.keys(element)[0];
+      li.appendChild(a);
+      ulist.appendChild(li);
+    });
+    bibliographies.appendChild(bibliographiesTitle);
+    bibliographies.appendChild(ulist);
+    mainContent.appendChild(bibliographies);
+
+    const divider = document.createElement("div");
+    const paragraph = document.createElement("h1");
+    divider.style.display = "flex";
+    divider.style.flexDirection = "row";
+    divider.style.width = "100%";
+    paragraph.textContent = "¿Quiénes somos?";
+
+    divider.appendChild(paragraph);
+    mainContent.appendChild(divider);
+
+    const rowContainer = document.createElement("div");
+    rowContainer.id = `row-cards-about-desktop-${idRowLayout}`;
+    rowContainer.style.display = "flex";
+    rowContainer.style.flexDirection = "row";
+    rowContainer.style.justifyContent = "center";
+    rowContainer.style.gap = "5%";
+    rowContainer.style.marginTop = "2%";
+    rowContainer.style.marginBottom = "5%";
+    rowContainer.style.width = "100%";
+    rowContainer.style.height = "15%";
+
+    mainContent.appendChild(rowContainer);
+
+    for (let i = 0; i < 2; i++) {
+      await loadComponent(
+        "about_us_desktop_card",
+        `row-cards-about-desktop-${idRowLayout}`
+      );
+      const card = document.getElementById("card-about-desktop");
+      card.id = `card-about-desktop-${i}`;
+      const cardData = cardProps[i];
+      const cardImage = card.querySelector("#card-img");
+      const cardBody = card.querySelector("#props-card-body");
+      cardImage.src = cardData.imageSrc;
+      cardBody.querySelector(".card-text").textContent = cardData.name;
+      cardBody.querySelector(".card-text").style.fontWeight = "500";
+      cardBody.querySelector(".card-text").style.fontSize = "1.5rem";
+    }
+    idRowLayout++;
+    const rowContainer2 = document.createElement("div");
+    rowContainer2.id = `row-cards-about-desktop-${idRowLayout}`;
+    rowContainer2.style.display = "flex";
+    rowContainer2.style.flexDirection = "row";
+    rowContainer2.style.justifyContent = "center";
+    rowContainer2.style.gap = "5%";
+    rowContainer2.style.marginTop = "5%";
+    rowContainer2.style.marginBottom = "10%";
+    rowContainer2.style.width = "100%";
+    rowContainer2.style.height = "15%";
+    mainContent.appendChild(rowContainer2);
+    for (let i = 2; i < cardProps.length; i++) {
+      await loadComponent(
+        "about_us_desktop_card",
+        `row-cards-about-desktop-${idRowLayout}`
+      );
+      const card = document.getElementById("card-about-desktop");
       card.id = `card-about-phone-${i}`;
       const cardData = cardProps[i];
       const cardImage = card.querySelector("#card-img");

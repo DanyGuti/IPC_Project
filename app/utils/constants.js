@@ -81,7 +81,7 @@ export const cardPropsComputadores = [
 
 export const cardPropsAboutUs = [
   {
-    name: "Daniel Gutiérrez Gómez",
+    name: "Daniel Gutiérrez",
     imageSrc: "./icons/no-image.svg",
   },
   {
