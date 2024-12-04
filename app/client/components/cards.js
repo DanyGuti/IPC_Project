@@ -478,12 +478,14 @@ export async function loadOutCardTfgsDesktop(
             p.style.display = "none";
           });
           card.style.height = "500px";
-        } else {
-          card.style.height = "250px";
         }
-        buttonFRow.style.display = "none";
+        if (cardProps[i].title !== "TFG de Aimar Zabala") {
+          buttonFRow.style.display = "none";
+        }
         card.style.transition = "height 0.5s";
-        cardBody.querySelector(".card-text").style.display = "none";
+        cardBody.querySelector(".card-text").style.display = "none"
+          ? cardProps[i].title !== "TFG de Aimar Zabala"
+          : "block";
         const buttonHidePdf = document.createElement("button");
         buttonHidePdf.id = `button-hide-pdf-${i}`;
         buttonHidePdf.type = "button";
@@ -504,8 +506,12 @@ export async function loadOutCardTfgsDesktop(
           cardBody.querySelector(".card-text").style.display = "block";
           buttonHidePdf.style.display = "none";
         });
-        card.appendChild(buttonHidePdf);
-        card.appendChild(iframe);
+        if (cardProps[i].title !== "TFG de Aimar Zabala") {
+          card.appendChild(buttonHidePdf);
+          card.appendChild(iframe);
+        } else {
+          card.appendChild(iframe);
+        }
       });
       card.appendChild(buttonFRow);
       rowContainer.appendChild(card);
