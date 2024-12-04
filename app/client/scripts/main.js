@@ -4,7 +4,6 @@ import {
   setNavbarActives,
   toggleDropdown,
   closeDropdownNavBar,
-
 } from "../../client/components/navbar/navbar.js";
 
 import {
@@ -19,6 +18,7 @@ import {
   loadOutCardLayoutTfgs,
   loadOutCardsAboutUs,
   loadOutCardTfgsDesktop,
+  loadOutCardsAboutUsDesktop,
 } from "../../client/components/cards.js";
 
 import {
@@ -197,6 +197,10 @@ export const loadOutCardLayoutTfgsDesktop = async () => {
  */
 export const loadAboutUsComponents = async () => {
   await loadOutCardsAboutUs(cardPropsAboutUs);
+};
+
+export const loadOutAboutUsDesktop = async () => {
+  await loadOutCardsAboutUsDesktop(cardPropsAboutUs);
 };
 
 /**
