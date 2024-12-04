@@ -313,19 +313,48 @@ export async function loadOutCardTfgsDesktop(
       buttonFRow.style.marginBottom = "2%";
       buttonFRow.addEventListener("click", () => {
         const iframe = document.createElement("iframe");
+        const wrapperLoader = document.createElement("div");
+        const newLoader = document.createElement("div");
+        const newSpan = document.createElement("span");
+        wrapperLoader.className = "d-flex justify-content-center";
+        wrapperLoader.id = `wrapper-loader-${i}`;
+        newLoader.id = `loader-${i}`;
+        const p = document.createElement("p");
+        p.textContent = "Cargando...";
         iframe.src = cardData.linkUrl;
         iframe.style.width = "100%";
         iframe.style.height = "100%";
-        if (iframe) card.appendChild(iframe);
+        iframe.style.display = "none";
+        newLoader.className = "spinner-border";
+        newLoader.role = "status";
+        newSpan.className = "sr-only";
+        if (
+          cardProps[i].title !== "TFG de Aimar Zabala (se descargará el pdf)"
+        ) {
+          wrapperLoader.appendChild(newLoader);
+          wrapperLoader.appendChild(p);
+          newLoader.appendChild(newSpan);
+          card.appendChild(wrapperLoader);
+          iframe.addEventListener("load", () => {
+            newLoader.style.display = "none";
+            wrapperLoader.style.display = "block";
+            iframe.style.display = "block";
+            p.style.display = "none";
+          });
+          card.style.height = "500px";
+        } else {
+          card.style.height = "250px";
+        }
         buttonFRow.style.display = "none";
-        card.style.height = "500px";
         card.style.transition = "height 0.5s";
         cardBody.querySelector(".card-text").style.display = "none";
         const buttonHidePdf = document.createElement("button");
         buttonHidePdf.id = `button-hide-pdf-${i}`;
         buttonHidePdf.type = "button";
         buttonHidePdf.style.width = "25%";
-        buttonHidePdf.style.height = "8%";
+        buttonHidePdf.style.height = "8%"
+          ? cardProps[i].title !== "TFG de Aimar Zabala (se descargará el pdf)"
+          : "22%";
         buttonHidePdf.className = "btn btn-primary";
         buttonHidePdf.textContent = "Ocultar PDF";
         buttonHidePdf.style.opacity = "0.89";
@@ -381,6 +410,28 @@ export async function loadOutCardTfgsDesktop(
       iframe.src = cardData.linkUrl;
       iframe.style.width = "100%";
       iframe.style.height = "100%";
+      const wrapperLoader = document.createElement("div");
+      const newLoader = document.createElement("div");
+      const newSpan = document.createElement("span");
+      const p = document.createElement("p");
+      p.textContent = "Cargando...";
+      newLoader.id = `loader-${2}`;
+      wrapperLoader.className = "d-flex justify-content-center";
+      wrapperLoader.id = `wrapper-loader-${2}`;
+      iframe.style.display = "none";
+      newLoader.className = "spinner-border";
+      newLoader.role = "status";
+      newSpan.className = "sr-only";
+      wrapperLoader.appendChild(newLoader);
+      wrapperLoader.appendChild(p);
+      newLoader.appendChild(newSpan);
+      card.appendChild(wrapperLoader);
+      iframe.addEventListener("load", () => {
+        newLoader.style.display = "none";
+        wrapperLoader.style.display = "block";
+        iframe.style.display = "block";
+        p.style.display = "none";
+      });
       buttonSRow.style.display = "none";
       // Expand the card
       card.style.height = "500px";
