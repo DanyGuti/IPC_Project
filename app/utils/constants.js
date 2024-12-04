@@ -8,7 +8,7 @@ export const cardPropsComputacion = [
       "https://addi.ehu.es/bitstream/handle/10810/63218/TFG_Jon_Vadillo.pdf?sequence=2&isAllowed=y",
   },
   {
-    title: "TFG de Aimar Zabala (se descargará el pdf)",
+    title: "TFG de Aimar Zabala",
     text: "Zabot: Un clasificador de basura robótico",
     description: "Last updated 3 mins ago",
     imageSrc: "./icons/no-image.svg",

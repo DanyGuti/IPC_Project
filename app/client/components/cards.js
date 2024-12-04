@@ -306,7 +306,11 @@ export async function loadOutCardTfgsDesktop(
       buttonFRow.style.width = "35%";
       buttonFRow.style.height = "22%";
       buttonFRow.className = "btn btn-primary";
-      buttonFRow.textContent = "Ver PDF memoria";
+      if (cardProps[i].title === "TFG de Aimar Zabala") {
+        buttonFRow.textContent = "Descargar PDF";
+      } else {
+        buttonFRow.textContent = "Ver PDF memoria";
+      }
       buttonFRow.style.opacity = "0.89";
       // align button to the center
       buttonFRow.style.margin = "auto";
@@ -328,9 +332,7 @@ export async function loadOutCardTfgsDesktop(
         newLoader.className = "spinner-border";
         newLoader.role = "status";
         newSpan.className = "sr-only";
-        if (
-          cardProps[i].title !== "TFG de Aimar Zabala (se descargará el pdf)"
-        ) {
+        if (cardProps[i].title !== "TFG de Aimar Zabala") {
           wrapperLoader.appendChild(newLoader);
           wrapperLoader.appendChild(p);
           newLoader.appendChild(newSpan);
@@ -353,7 +355,7 @@ export async function loadOutCardTfgsDesktop(
         buttonHidePdf.type = "button";
         buttonHidePdf.style.width = "25%";
         buttonHidePdf.style.height = "8%"
-          ? cardProps[i].title !== "TFG de Aimar Zabala (se descargará el pdf)"
+          ? cardProps[i].title !== "TFG de Aimar Zabala"
           : "22%";
         buttonHidePdf.className = "btn btn-primary";
         buttonHidePdf.textContent = "Ocultar PDF";
