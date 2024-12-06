@@ -1,7 +1,7 @@
 export const cardPropsComputacion = [
   {
     title: "TFG de Jon Vadillo Del Ser",
-    text: "Detección de la enfermedad de Alzheimer en base a volúmenes de regiones cerebrales específicas",
+    text: '"Detección de la enfermedad de Alzheimer en base a volúmenes de regiones cerebrales específicas"',
     description: "Last updated 3 mins ago",
     imageSrc: "./icons/no-image.svg",
     linkUrl:
@@ -9,7 +9,7 @@ export const cardPropsComputacion = [
   },
   {
     title: "TFG de Aimar Zabala",
-    text: "Zabot: Un clasificador de basura robótico",
+    text: '"Zabot: Un clasificador de basura robótico"',
     description: "Last updated 3 mins ago",
     imageSrc: "./icons/no-image.svg",
     linkUrl:
@@ -17,7 +17,7 @@ export const cardPropsComputacion = [
   },
   {
     title: "TFG de Mikel Zubillaga (en euskera)",
-    text: "Análisis de transferencia entre lenguas en Euskera, extracción de información",
+    text: '"Análisis de transferencia entre lenguas en Euskera, extracción de información"',
     description: "Last updated 3 mins ago",
     imageSrc: "./icons/no-image.svg",
     linkUrl:
@@ -28,7 +28,7 @@ export const cardPropsComputacion = [
 export const cardPropsIngSoftware = [
   {
     title: "TFG de Unai Pinedo Molina",
-    text: "Infraestructura de pruebas en Android: estudio de Firebase y otras herramientas de monitoreo de la calidad",
+    text: '"Infraestructura de pruebas en Android: estudio de Firebase y otras herramientas de monitoreo de la calidad"',
     description: "Last updated 3 mins ago",
     imageSrc: "./icons/no-image.svg",
     linkUrl:
@@ -36,7 +36,7 @@ export const cardPropsIngSoftware = [
   },
   {
     title: "TFG de Unai Hurtado (en euskera)",
-    text: "Se agregó una nueva funcionalidad a código abierto para el control de la enfermedad de la diabétes: calcular automáticamente la cantidad de insulina que se debe administrar mediante el aprendizaje por refuerzo",
+    text: '"Se agregó una nueva funcionalidad a código abierto para el control de la enfermedad de la diabétes: calcular automáticamente la cantidad de insulina que se debe administrar mediante el aprendizaje por refuerzo"',
     description: "Last updated 3 mins ago",
     imageSrc: "./icons/no-image.svg",
     linkUrl:
@@ -44,7 +44,7 @@ export const cardPropsIngSoftware = [
   },
   {
     title: "TFG de Julen Larrañaga (en euskera)",
-    text: "Desarrollo de sistema web para garantizar la evaluación colaborativa de la accesibilidad web",
+    text: '"Desarrollo de sistema web para garantizar la evaluación colaborativa de la accesibilidad web"',
     description: "Last updated 3 mins ago",
     imageSrc: "./icons/no-image.svg",
     linkUrl:
@@ -56,7 +56,7 @@ export const cardPropsComputadores = [
   {
     title: "TFG de Asier Esteban Sauce",
     description: "Last updated 3 mins ago",
-    text: "Algoritmos de asignación de recursos para la guía de un brazo robótico",
+    text: '"Algoritmos de asignación de recursos para la guía de un brazo robótico"',
     imageSrc: "./icons/no-image.svg",
     linkUrl:
       "https://addi.ehu.es/bitstream/handle/10810/58090/TFG_Asier_Esteban.pdf?sequence=1&isAllowed=y",
@@ -64,7 +64,7 @@ export const cardPropsComputadores = [
   {
     title: "TFG de Borja Moralejo Tobajas",
     description: "Last updated 3 mins ago",
-    text: "Análisis de los efectos de la consolidación en entornos HPC",
+    text: '"Análisis de los efectos de la consolidación en entornos HPC"',
     imageSrc: "./icons/no-image.svg",
     linkUrl:
       "https://addi.ehu.es/bitstream/handle/10810/63228/TFG_Borja_Moralejo.pdf?sequence=2&isAllowed=y",
@@ -72,7 +72,7 @@ export const cardPropsComputadores = [
   {
     title: "TFG de Alex de Miguel (en euskera)",
     description: "Last updated 3 mins ago",
-    text: "Diseño, despliegue y validación de una plataforma software para facilitar la creación y despliegue de servicios industriales",
+    text: '"Diseño, despliegue y validación de una plataforma software para facilitar la creación y despliegue de servicios industriales"',
     imageSrc: "./icons/no-image.svg",
     linkUrl:
       "https://addi.ehu.es/bitstream/handle/10810/58089/GrAL_Alex_de_Miguel.pdf?sequence=2&isAllowed=y",

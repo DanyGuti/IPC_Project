@@ -226,10 +226,6 @@ export const loadReq = async () => {
   await loadComponent("req_nor", "content-container");
 };
 
-export const setFooter = () => {
-  fetch(`${absolutePath}/client/components/footer/footer.html`)
-    .then((response) => response.text())
-    .then((html) => {
-      document.getElementById("footer-container").innerHTML = html;
-    });
+export const setFooter = async () => {
+  loadComponent("footer/footer", "footer-container");
 };

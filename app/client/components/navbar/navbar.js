@@ -454,7 +454,7 @@ function setHeader() {
   header.style.marginTop = "5%";
   switch (getCurrentPage) {
     case "/IPC_Project/app/home.html":
-      header.innerHTML = "<h1>Welcome to Home Page</h1>";
+      header.innerHTML = "<h1>Bienvendido/a</h1>";
       break;
     case "/IPC_Project/app/calendarios.html":
       header.innerHTML = "<h1>Calendarios</h1>";

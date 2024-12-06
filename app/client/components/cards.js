@@ -431,15 +431,32 @@ export async function loadOutCardTfgsDesktop(
       const cardData = cardProps[i];
       const cardBody = card.querySelector("#props-card-body");
       cardBody.querySelector(".card-title").textContent = cardData.title;
-      cardBody.querySelector(".card-title").style.fontWeight = "bold";
+      cardBody.querySelector(".card-title").style.fontWeight = "450";
+      cardBody.querySelector(".card-title").style.textAlign = "center";
       cardBody.querySelector(".card-text").textContent = cardData.text;
+      cardBody.querySelector(".card-text").style.fontWeight = "500";
+      cardBody.querySelector(
+        ".text-muted"
+      ).innerHTML = `<a href="${cardData.linkUrl}" target="_blank">Ver directamente memoria</a>`;
+      // grab the anchor and change the color to black
+      // cardBody.querySelector(".text-muted a").style.color = "black";
+      // cardBody.querySelector(".text-muted a").style.textDecorationColor =
+      //   "#343a40";
       const buttonFRow = document.createElement("button");
       buttonFRow.id = `button-show-more-${i}`;
       buttonFRow.style.padding = "2%";
       buttonFRow.type = "button";
       buttonFRow.style.width = "35%";
       buttonFRow.style.height = "22%";
-      buttonFRow.className = "btn btn-primary";
+      buttonFRow.className = "btn";
+      buttonFRow.style.backgroundColor = "#343a40";
+      buttonFRow.style.color = "white";
+      buttonFRow.addEventListener("mouseover", () => {
+        buttonFRow.style.opacity = "0.9";
+      });
+      buttonFRow.addEventListener("mouseout", () => {
+        buttonFRow.style.opacity = "1";
+      });
       if (cardProps[i].title === "TFG de Aimar Zabala") {
         buttonFRow.textContent = "Descargar PDF";
       } else {
@@ -481,11 +498,9 @@ export async function loadOutCardTfgsDesktop(
         }
         if (cardProps[i].title !== "TFG de Aimar Zabala") {
           buttonFRow.style.display = "none";
+          cardBody.querySelector(".card-text").style.display = "none";
         }
         card.style.transition = "height 0.5s";
-        cardBody.querySelector(".card-text").style.display = "none"
-          ? cardProps[i].title !== "TFG de Aimar Zabala"
-          : "block";
         const buttonHidePdf = document.createElement("button");
         buttonHidePdf.id = `button-hide-pdf-${i}`;
         buttonHidePdf.type = "button";
@@ -499,12 +514,21 @@ export async function loadOutCardTfgsDesktop(
         // align button to the center
         buttonHidePdf.style.margin = "auto";
         buttonHidePdf.style.marginBottom = "2%";
+        buttonHidePdf.className = "btn";
+        buttonHidePdf.style.backgroundColor = "#343a40";
+        buttonHidePdf.style.color = "white";
         buttonHidePdf.addEventListener("click", () => {
           iframe.style.display = "none";
           buttonFRow.style.display = "block";
-          card.style.height = "200px";
+          card.style.height = "250px";
           cardBody.querySelector(".card-text").style.display = "block";
           buttonHidePdf.style.display = "none";
+        });
+        buttonHidePdf.addEventListener("mouseover", () => {
+          buttonHidePdf.style.opacity = "0.9";
+        });
+        buttonHidePdf.addEventListener("mouseout", () => {
+          buttonHidePdf.style.opacity = "1";
         });
         if (cardProps[i].title !== "TFG de Aimar Zabala") {
           card.appendChild(buttonHidePdf);
@@ -535,6 +559,11 @@ export async function loadOutCardTfgsDesktop(
     cardBody.querySelector(".card-title").textContent = cardData.title;
     cardBody.querySelector(".card-title").style.fontWeight = "bold";
     cardBody.querySelector(".card-text").textContent = cardData.text;
+    cardBody.querySelector(".card-text").style.fontWeight = "500";
+    cardBody.querySelector(
+      ".text-muted"
+    ).innerHTML = `<a href="${cardData.linkUrl}" target="_blank">Ver directamente la memoria</a>`;
+    cardBody.querySelector(".card-text").style.textAlign = "center";
     const buttonSRow = document.createElement("button");
     buttonSRow.id = `button-show-more-2`;
     buttonSRow.style.padding = "2%";
@@ -544,9 +573,18 @@ export async function loadOutCardTfgsDesktop(
     buttonSRow.textContent = "Ver PDF memoria";
     buttonSRow.style.height = "22%";
     buttonSRow.style.opacity = "0.89";
+    buttonSRow.addEventListener("mouseover", () => {
+      buttonSRow.style.opacity = "0.9";
+    });
+    buttonSRow.addEventListener("mouseout", () => {
+      buttonSRow.style.opacity = "1";
+    });
     // align button to the center
     buttonSRow.style.margin = "auto";
     buttonSRow.style.marginBottom = "2%";
+    buttonSRow.className = "btn";
+    buttonSRow.style.backgroundColor = "#343a40";
+    buttonSRow.style.color = "white";
     buttonSRow.addEventListener("click", () => {
       const iframe = document.createElement("iframe");
       iframe.src = cardData.linkUrl;
@@ -590,10 +628,19 @@ export async function loadOutCardTfgsDesktop(
       // align button to the center
       buttonHidePdf.style.margin = "auto";
       buttonHidePdf.style.marginBottom = "2%";
+      buttonHidePdf.className = "btn";
+      buttonHidePdf.style.backgroundColor = "#343a40";
+      buttonHidePdf.style.color = "white";
+      buttonHidePdf.addEventListener("mouseover", () => {
+        buttonHidePdf.style.opacity = "0.9";
+      });
+      buttonHidePdf.addEventListener("mouseout", () => {
+        buttonHidePdf.style.opacity = "1";
+      });
       buttonHidePdf.addEventListener("click", () => {
         iframe.style.display = "none";
         buttonSRow.style.display = "block";
-        card.style.height = "200px";
+        card.style.height = "250px";
         cardBody.querySelector(".card-text").style.display = "block";
         buttonHidePdf.style.display = "none";
       });
