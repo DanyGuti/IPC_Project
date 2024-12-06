@@ -114,4 +114,4 @@ export const cardPropsBibliographies = [
   },
 ];
 
-export const absolutePath = "/IPC_Project/app";
+export const absolutePath = "/IPC_Project/docs";

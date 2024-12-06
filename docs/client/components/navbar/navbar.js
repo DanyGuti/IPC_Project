@@ -163,18 +163,18 @@ export async function setNavbarActives() {
   };
 
   const pageToActiveLinkDesktop = {
-    "/IPC_Project/app/about_us.html": "nav-a-about",
-    "/IPC_Project/app/calendarios.html": "nav-a-cal",
-    "/IPC_Project/app/home.html": "nav-a-home",
+    "/IPC_Project/docs/about_us.html": "nav-a-about",
+    "/IPC_Project/docs/calendarios.html": "nav-a-cal",
+    "/IPC_Project/docs/home.html": "nav-a-home",
   };
 
   const pageToActiveLinkPhone = {
-    "/IPC_Project/app/about_us.html": "nav-a-about-phone",
-    "/IPC_Project/app/calendarios.html": "nav-a-cal-phone",
-    "/IPC_Project/app/home.html": "nav-a-home-phone",
-    "/IPC_Project/app/tfgs_anteriores.html": "nav-a-tfgs-phone",
-    "/IPC_Project/app/autoevaluacion.html": "nav-a-eval-phone",
-    "/IPC_Project/app/requisitos_norm.html": "nav-a-req-phone",
+    "/IPC_Project/docs/about_us.html": "nav-a-about-phone",
+    "/IPC_Project/docs/calendarios.html": "nav-a-cal-phone",
+    "/IPC_Project/docs/home.html": "nav-a-home-phone",
+    "/IPC_Project/docs/tfgs_anteriores.html": "nav-a-tfgs-phone",
+    "/IPC_Project/docs/autoevaluacion.html": "nav-a-eval-phone",
+    "/IPC_Project/docs/requisitos_norm.html": "nav-a-req-phone",
   };
   /**
    * Set the inactive state of the navbar
@@ -357,7 +357,7 @@ function loadPageContent(href) {
 
         contentContainer.innerHTML = tempDiv.innerHTML;
         const getCurrentPage = window.location.pathname;
-        if (getCurrentPage === "/IPC_Project/app/tfgs_anteriores.html") {
+        if (getCurrentPage === "/IPC_Project/docs/tfgs_anteriores.html") {
           if (getWidthWindow() < 768) {
             const card = document.getElementById("row-cards-0");
             if (!card || card.childElementCount === 0) {
@@ -372,7 +372,7 @@ function loadPageContent(href) {
           loadHeaderBackGroundImage(
             "https://images.unsplash.com/photo-1488998427799-e3362cec87c3?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNvbXB1dGVyJTIwYm9va3xlbnwwfHwwfHx8MA%3D%3D"
           );
-        } else if (getCurrentPage === "/IPC_Project/app/about_us.html") {
+        } else if (getCurrentPage === "/IPC_Project/docs/about_us.html") {
           if (getWidthWindow() < 768) {
             loadAboutUsComponents();
           } else {
@@ -381,22 +381,24 @@ function loadPageContent(href) {
           loadHeaderBackGroundImage(
             "https://images.unsplash.com/photo-1488998427799-e3362cec87c3?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNvbXB1dGVyJTIwYm9va3xlbnwwfHwwfHx8MA%3D%3D"
           );
-        } else if (getCurrentPage === "/IPC_Project/app/autoevaluacion.html") {
+        } else if (getCurrentPage === "/IPC_Project/docs/autoevaluacion.html") {
           loadForm();
           loadHeaderBackGroundImage(
             "https://images.unsplash.com/photo-1488998427799-e3362cec87c3?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNvbXB1dGVyJTIwYm9va3xlbnwwfHwwfHx8MA%3D%3D"
           );
-        } else if (getCurrentPage === "/IPC_Project/app/home.html") {
+        } else if (getCurrentPage === "/IPC_Project/docs/home.html") {
           loadHomeComponents();
           loadHeaderBackGroundImage(
             "https://images.unsplash.com/photo-1488998427799-e3362cec87c3?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNvbXB1dGVyJTIwYm9va3xlbnwwfHwwfHx8MA%3D%3D"
           );
-        } else if (getCurrentPage === "/IPC_Project/app/requisitos_norm.html") {
+        } else if (
+          getCurrentPage === "/IPC_Project/docs/requisitos_norm.html"
+        ) {
           loadReq();
           loadHeaderBackGroundImage(
             "https://images.unsplash.com/photo-1488998427799-e3362cec87c3?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNvbXB1dGVyJTIwYm9va3xlbnwwfHwwfHx8MA%3D%3D"
           );
-        } else if (getCurrentPage === "/IPC_Project/app/calendarios.html") {
+        } else if (getCurrentPage === "/IPC_Project/docs/calendarios.html") {
           loadCalendars();
           loadHeaderBackGroundImage(
             "https://images.unsplash.com/photo-1488998427799-e3362cec87c3?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNvbXB1dGVyJTIwYm9va3xlbnwwfHwwfHx8MA%3D%3D"
@@ -453,28 +455,28 @@ function setHeader() {
   header.style.textAlign = "center";
   header.style.marginTop = "5%";
   switch (getCurrentPage) {
-    case "/IPC_Project/app/home.html":
+    case "/IPC_Project/docs/home.html":
       header.innerHTML = "<h1>Welcome to Home Page</h1>";
       break;
-    case "/IPC_Project/app/calendarios.html":
+    case "/IPC_Project/docs/calendarios.html":
       header.innerHTML = "<h1>Calendarios</h1>";
       break;
-    case "/IPC_Project/app/about_us.html":
+    case "/IPC_Project/docs/about_us.html":
       header.innerHTML = "<h1>About Us</h1>";
       break;
-    case "/IPC_Project/app/tfgs_anteriores.html":
+    case "/IPC_Project/docs/tfgs_anteriores.html":
       header.innerHTML = "<h1>TFG's anteriores</h1>";
       break;
-    case "/IPC_Project/app/autoevaluacion.html":
+    case "/IPC_Project/docs/autoevaluacion.html":
       header.innerHTML = "<h1>Cuestionario</h1>";
       break;
-    case "/IPC_Project/app/":
+    case "/IPC_Project/docs/":
       header.innerHTML = "<h1>Inicio</h1>";
       break;
-    case "/IPC_Project/app/index.html":
+    case "/IPC_Project/docs/index.html":
       header.innerHTML = "<h1>Inicio</h1>";
       break;
-    case "/IPC_Project/app/requisitos_norm.html":
+    case "/IPC_Project/docs/requisitos_norm.html":
       header.innerHTML = "<h1>Requisitos y normativas</h1>";
       break;
     default:

@@ -152,7 +152,7 @@ const postFormSubmit = async (validResponses, form) => {
     await resetStateForm(form);
     const documentButton = document.getElementById("submit-form-button");
     if (documentButton) documentButton.disabled = true;
-    window.location.href = "/IPC_Project/app/home.html";
+    window.location.href = "/IPC_Project/docs/home.html";
   });
 };
 
