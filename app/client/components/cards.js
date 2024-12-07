@@ -158,6 +158,11 @@ export async function loadOutCardsAboutUs(cardProps) {
     cardPropsBibliographies.forEach((element) => {
       const li = document.createElement("li");
       const a = document.createElement("a");
+      li.style.color = "#343a40";
+      li.style.textDecoration = "underline";
+
+      a.style.color = "#343a40";
+      a.style.textDecoration = "underline";
       a.href = Object.values(element)[0];
       a.textContent = Object.keys(element)[0];
       li.appendChild(a);
@@ -187,6 +192,7 @@ export async function loadOutCardsAboutUs(cardProps) {
     rowContainer.style.marginBottom = "5%";
     rowContainer.style.width = "100%";
     rowContainer.style.height = "32%";
+    rowContainer.style.textAlign = "center";
 
     mainContent.appendChild(rowContainer);
 
@@ -213,6 +219,7 @@ export async function loadOutCardsAboutUs(cardProps) {
     rowContainer2.style.marginBottom = "10%";
     rowContainer2.style.width = "100%";
     rowContainer2.style.height = "32%";
+    rowContainer2.style.textAlign = "center";
     mainContent.appendChild(rowContainer2);
     for (let i = 2; i < cardProps.length; i++) {
       await loadComponent("about_us_card", `row-cards-about-${idRowLayout}`);
@@ -286,6 +293,12 @@ export async function loadOutCardsAboutUsDesktop(cardProps) {
     cardPropsBibliographies.forEach((element) => {
       const li = document.createElement("li");
       const a = document.createElement("a");
+      li.style.color = "#343a40";
+      li.style.textDecoration = "underline";
+      li.style.padding = "0.8%";
+
+      a.style.color = "#343a40";
+      a.style.textDecoration = "underline";
       a.href = Object.values(element)[0];
       a.textContent = Object.keys(element)[0];
       li.appendChild(a);
@@ -315,6 +328,7 @@ export async function loadOutCardsAboutUsDesktop(cardProps) {
     rowContainer.style.marginBottom = "5%";
     rowContainer.style.width = "100%";
     rowContainer.style.height = "15%";
+    rowContainer.style.textAlign = "center";
 
     mainContent.appendChild(rowContainer);
 
@@ -339,6 +353,7 @@ export async function loadOutCardsAboutUsDesktop(cardProps) {
     rowContainer2.style.display = "flex";
     rowContainer2.style.flexDirection = "row";
     rowContainer2.style.justifyContent = "center";
+    rowContainer2.style.textAlign = "center";
     rowContainer2.style.gap = "5%";
     rowContainer2.style.marginTop = "5%";
     rowContainer2.style.marginBottom = "10%";
@@ -557,7 +572,7 @@ export async function loadOutCardTfgsDesktop(
     const cardData = cardProps[2];
     const cardBody = card.querySelector("#props-card-body");
     cardBody.querySelector(".card-title").textContent = cardData.title;
-    cardBody.querySelector(".card-title").style.fontWeight = "bold";
+    cardBody.querySelector(".card-title").style.fontWeight = "450";
     cardBody.querySelector(".card-text").textContent = cardData.text;
     cardBody.querySelector(".card-text").style.fontWeight = "500";
     cardBody.querySelector(
