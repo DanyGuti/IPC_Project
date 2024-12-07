@@ -85,7 +85,7 @@ const postFormSubmit = async (validResponses, form) => {
   // Close the modal
 
   const buttonShowResults = document.createElement("button");
-  buttonShowResults.textContent = "Respuestas";
+  buttonShowResults.textContent = "Ver respuestas";
   buttonShowResults.className = "btn btn-info";
   buttonShowResults.id = "show-results-button";
 
@@ -161,21 +161,24 @@ const postFormSubmit = async (validResponses, form) => {
  */
 export const constructFormLayoutPhone = () => {
   const containerInnerDiv = document.getElementById("question-container-form");
-  const descriptionForm = document.createElement("h3");
+  const descriptionForm = document.createElement("p");
   descriptionForm.textContent =
     "Contesta las siguientes preguntas para autoevaluar tus conocimientos, no podrás ver los resultados hasta que hayas contestado todas las preguntas.";
-  descriptionForm.style.fontWeight = "300";
+  descriptionForm.style.fontWeight = "400";
   descriptionForm.style.marginBottom = "5%";
+  descriptionForm.style.fontSize = "1.35rem";
   descriptionForm.style.marginTop = "5%";
   descriptionForm.style.width = "90%";
+  descriptionForm.style.textAlign = "justify";
   containerInnerDiv.appendChild(descriptionForm);
   questionsAutoEval.forEach((question, index) => {
     const paragraph = document.createElement("p");
     paragraph.style.fontWeight = "660";
-    paragraph.textContent = `Pregunta ${index + 1}: ${question.question}`;
+    paragraph.textContent = `Pregunta ${index + 1}.- ${question.question}`;
     paragraph.id = `question-form-${index}`;
-    paragraph.style.width = "95%";
-    paragraph.style.fontSize = "1.4rem";
+    paragraph.style.width = "90%";
+    paragraph.style.fontSize = "1.3rem";
+    paragraph.style.textAlign = "justify";
     const asterisk = document.createElement("span");
     asterisk.textContent = " *";
     asterisk.style.color = "red";
@@ -188,6 +191,7 @@ export const constructFormLayoutPhone = () => {
       div.style.display = "flex";
       div.style.flexDirection = "row";
       div.style.justifyContent = "start";
+      div.style.textAlign = "justify";
       div.style.marginLeft = "5%";
       div.style.gap = "2%";
       div.style.width = "85%";
