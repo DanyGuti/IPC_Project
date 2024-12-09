@@ -42,6 +42,9 @@ export const loadComponent = (componentName, containerId) => {
       .then((response) => response.text())
       .then((html) => {
         const container = document.getElementById(containerId);
+        if (!container) {
+          reject("Container not found");
+        }
         const tempDiv = document.createElement("div");
         tempDiv.innerHTML = html;
 

@@ -7,6 +7,7 @@ import {
   loadCalendars,
   loadHomeComponents,
   loadReq,
+  setFooter,
 } from "../../scripts/main.js";
 
 /**
