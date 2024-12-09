@@ -227,5 +227,5 @@ export const loadReq = async () => {
 };
 
 export const setFooter = async () => {
-  loadComponent("footer/footer", "footer-container");
+  await loadComponent("footer/footer", "footer-container");
 };
