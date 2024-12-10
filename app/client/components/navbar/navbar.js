@@ -351,6 +351,11 @@ function loadPageContent(href) {
         const tempDiv = document.createElement("div");
         tempDiv.innerHTML = html;
 
+        const footer = tempDiv.querySelector("#footer-container");
+        if (footer) {
+            footer.remove();
+        }
+
         const scripts = tempDiv.querySelectorAll("script");
         scripts.forEach((script) => script.remove());
         resetStateOnLoadPage(tempDiv);
